@@ -21,7 +21,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
  
 # Models
-#################################################################from app.models import *
+from odclock.models import *
  
 # JSON
 from django.utils import simplejson
@@ -38,20 +38,63 @@ from django.template import loader, Context
 
 
 def index(request):
-    
     title = 'Clinica Odontologica'
-    login_form = LoginForm()
-    regis_form = RegisForm
     return render_to_response(
         
         'index.html',
         {
             'title': title,
-            'login_form': login_form,
-            'regis_form':regis_form,
         },
         context_instance=RequestContext(request)
     )
+
+def ubicacion(request):    
+    title = 'Clinica Odontologica'
+    return render_to_response(
+        
+        'ubicacion.html',
+        {
+            'title': title,
+        },
+        context_instance=RequestContext(request)
+    )
+
+def tomahora(request):    
+    title = 'Clinica Odontologica'    
+    login_form = LoginForm()
+    regis_form = RegisForm()
+    return render_to_response(        
+        'tomahora.html',
+        {
+            'title': title,            
+            'login_form': login_form,
+            'regis_form': regis_form
+        },
+        context_instance=RequestContext(request)
+    )
+
+def quienessomos(request):    
+    title = 'Clinica Odontologica'
+    return render_to_response(
+        'quienessomos.html',
+        {
+            'title': title,
+        },
+        context_instance=RequestContext(request)
+    )
+    
+def seccionpersonal(request):    
+    title = 'Clinica Odontologica'
+    login_form = LoginForm()
+    return render_to_response(        
+        'seccionpersonal.html',
+        {
+            'title': title,
+            'login_form': login_form,
+        },
+        context_instance=RequestContext(request)
+    )
+
 def login_view(request):
     """
     Vista encargada autenticar un usuario para ingresar al sistema

@@ -30,6 +30,14 @@
                     <li><a href="tomahora">Toma Hora</a></li>
                     <li><a href="odclock">Quienes Somos</a></li>
                     <li><a href="personal">Personal</a></li>
+                    {% if not user.is_anonymous %}
+                      <li>
+                          <form action="/logout" method="post" >
+                              {% csrf_token %}                                        
+                              <input class="btn btn-danger" type="submit"value="Salir">
+                          </form>
+                      </li>
+                    {% endif %}
                   </ul>
                 </div>
               </div>

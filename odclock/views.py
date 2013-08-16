@@ -124,33 +124,44 @@ def login_view(request):
         return HttpResponseRedirect('/')
 
 def crear_usuario(request):
-    url = '/'
-    if not request.user.is_anonymous():
-        messages.error(request, 'ERROR no es anonimo')
-        return HttpResponseRedirect(url)
-
     if not request.method == 'POST':
-        messages.error(request, 'ERROR no es post')
-        return HttpResponseRedirect(url)
+        return HttpResponse('<h1>ERROR no es post</h1>')
 
-    form = LoginForm(request.POST)
-    
-    # El formulario debe ser válido
+    form = RegisForm(request.POST)
+
     if not form.is_valid():
-        messages.error(request, 'Formulario Malo')
-        return HttpResponseRedirect(url)
+        return HttpResponse('<h1>Formulario Malo</h1>')
 
-    # ----- Valido
+    name = request.POST['username']
+    nombres = request.POST['nombres']
+    apellidos = request.POST['apellidos']
+    pass1 = request.POST['password1']
+    pass2 = request.POST['password2']
+    email1 = request.POST['email1']
+    email2 = request.POST['email2']
 
-    if 'password1' != 'password2':
-        messages.error(request, 'las dos claves deben ser correctas')
-        #return HttpResponseRedirect(url)
 
-    new_user = User(username=username, password=password1)
+    if pass1 != pass2:
+        return HttpResponse('<h1>Las contraseñas ingresadas no son iguales</h1>')
+
+    if email2 != email1:
+        return HttpResponse('<h1>Los Correos ingresados no son iguales</h1>')
+
+    pepito = False
+    usuarios = User.objects.all()
+    for usuario in usuarios:
+        if usuario ==name:
+            pepito = True
+
+    if pepito:
+        return HttpResponse('<h1>el usuario ya exite</h1>')
+
+    new_user = User(username=name,email=email1,firs_name=nombres,last_name=apellidos)
+    new_user.set_password(pass1)
     new_user.save()
+    return HttpResponseRedirect('/tomahora')
 
-    return HttpResponseRedirect('/')
-
+@login_required
 def logout_view(request):
     logout(request)
     return HttpResponseRedirect('/')

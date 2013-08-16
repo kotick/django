@@ -1,5 +1,8 @@
 {% extends 'base.html' %}
 {% block MAIN %}
+{% if not user.is_anonymous %}
+
+{%else%}
 <div class="centro" style="border: 1px solid #d0d0d0; padding-bottom: 2%;">
 	<h2>Bienvenido</h2>
 	<h3>A nuestro moderno sistema de toma horar, donde podra reservar, revisar y eliminar una hora desde la comodidad de su casa</h3>
@@ -20,12 +23,12 @@
 	    <form action="/login" method="post">
 	        {% csrf_token %}
 	        {{regis_form.as_p}}
-        <input type="submit" class="btn" value="Ingresar">
-    </form>
+        	<input type="submit" class="btn" value="Ingresar">
+    	</form>
 	</div>
 	<div class="modal-footer">
 		<button class="btn btn-primary">Cerrar</button>
 	</div>
 </div>
-
+{% endif %} 
 {% endblock %}

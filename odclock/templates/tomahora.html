@@ -1,7 +1,61 @@
 {% extends 'base.html' %}
 {% block MAIN %}
 {% if not user.is_anonymous %}
-
+<div class="tabbable tabs-left">      
+	<ul id="myTab" class="nav nav-tabs">
+		<li class="active"><a href="#informacion" data-toggle="tab">Informaciones</a></li>
+		<li><a href="#agendadas" data-toggle="tab">Horas Agendadas</a></li>
+		<li><a href="#tomar" data-toggle="tab">Toma Hora</a></li>
+		<li><a href="#administrar" data-toggle="tab">Administrar cuenta</a></li>
+	</ul>
+	<div id="myTabContent" class="tab-content">
+		<div class="tab-pane fade in active" id="informacion">
+			<h3>Bienvenido</h3>
+			<h2>Bla Bla Bla</h3>
+			<p>Mau Mau Mau</p>
+		</div>
+		<div class="tab-pane fade" id="agendadas">
+			{%if agendamientos%}
+				{%for agendamiento in agendamientos%}
+					{%if agendamiento.desabilitado%}
+					{%else%}
+						<table class="table table-hover table-condensed">
+							<thead> 
+								<tr>
+									<td>Especialidad</td>
+									<td>Dentista</td>
+									<td>Fecha</td>
+									<td>Hora</td>
+									<td>Eliminar Hora</td>
+								</tr>
+							</thead>                   
+							<tbody>
+								<tr>
+									<td>agendamiento.especialidad.nombre</td>
+									<td>agendamiento.dentista.user.first_name</td>
+									<td>agendamiento.calendario.fecha</td>
+									<td>agendamiento.calendario.bloque</td>
+									<td>
+			                            <form action="borrar/hora/{{agendamiento.id}}/" method="post">
+				                            {% csrf_token %}
+				                            <button type="submit"class="btn btn-primary">Borrar</button>                            
+			                            </form>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					{%endif%}
+				{%endfor%}
+			{%else%}
+				<h3>No posee agendamientos</h3>
+			{%endif%}
+		</div>
+		<div class="tab-pane fade" id="tomar">
+		</div>
+		<div class="tab-pane fade" id="administrar">
+		</div>
+	</div>
+</div>
 {%else%}
 <div class="centro" style="border: 1px solid #d0d0d0; padding-bottom: 2%;">
 	<h2>Bienvenido</h2>

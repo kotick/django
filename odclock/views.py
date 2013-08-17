@@ -63,12 +63,16 @@ def tomahora(request):
     title = 'Clinica Odontologica'    
     login_form = LoginForm()
     regis_form = RegisForm()
+    paciente = request.user.paciente
+    agendamientos = Agendamiento.objects.filter(paciente= paciente)
+
     return render_to_response(        
         'tomahora.html',
         {
             'title': title,            
             'login_form': login_form,
-            'regis_form': regis_form
+            'regis_form': regis_form,
+            'agendamientos': agendamientos,
         },
         context_instance=RequestContext(request)
     )
@@ -165,3 +169,9 @@ def crear_usuario(request):
 def logout_view(request):
     logout(request)
     return HttpResponseRedirect('/')
+
+@login_required
+def borrar_hora(request,id_in):
+    hora = Agendamiento.objects.get(id=id_in)
+    hora.desabilitado = True
+    return HttpResponseRedirect('/tomahora')

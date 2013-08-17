@@ -60,22 +60,45 @@ def ubicacion(request):
     )
 
 def tomahora(request):    
+    title = 'Clinica Odontologica'
+    usuario = User.objects.get(username=request.user)
+    if Paciente.objects.filter(user=usuario):
+        agendamientos = Agendamiento.objects.filter(paciente= usuario.paciente)
+        modificarp_form = ModificarP()
+        modificare_form = ModificarE()
+        modificartc_form = ModificarTc()
+        modificartf_form = ModificarTf()
+        error = False
+        return render_to_response(        
+            'tomahora.html',
+            {
+                'title': title,
+                'agendamientos': agendamientos,
+                'modificarp_form':modificarp_form,
+                'modificare_form':modificare_form,
+                'modificartc_form':modificartc_form,
+                'modificartf_form':modificartf_form,
+                'error':error,
+            },
+            context_instance=RequestContext(request)
+        )
+    else:
+        return HttpResponseRedirect('/sesionpaciente')
+
+def iniciosesionpaciente(request):    
     title = 'Clinica Odontologica'    
     login_form = LoginForm()
     regis_form = RegisForm()
-    paciente = request.user.paciente
-    agendamientos = Agendamiento.objects.filter(paciente= paciente)
-
     return render_to_response(        
-        'tomahora.html',
+        'iniciosesionpaciente.html',
         {
             'title': title,            
             'login_form': login_form,
             'regis_form': regis_form,
-            'agendamientos': agendamientos,
         },
         context_instance=RequestContext(request)
     )
+
 
 def quienessomos(request):    
     title = 'Clinica Odontologica'
@@ -86,12 +109,30 @@ def quienessomos(request):
         },
         context_instance=RequestContext(request)
     )
+
     
-def seccionpersonal(request):    
+def seccionpersonal(request):
+
+    usuario = User.objects.get(username = request.user)
+    if Paciente.objects.filter(user= usuario):
+        return HttpResponseRedirect('/sesionpersonal')
+
+    else:
+        title = 'Clinica Odontologica'
+        login_form = LoginForm()
+        return render_to_response(        
+            'seccionpersonal.html',
+            {
+                'title': title,
+                'login_form': login_form,
+            },
+            context_instance=RequestContext(request)
+        )    
+def iniciosesionpersonal(request):
     title = 'Clinica Odontologica'
     login_form = LoginForm()
     return render_to_response(        
-        'seccionpersonal.html',
+        'iniciosesionpersonal.html',
         {
             'title': title,
             'login_form': login_form,
@@ -113,15 +154,20 @@ def login_view(request):
             if user.is_active:
                 login(request, user)
                 # redireccionar al inicio
+                usuario = request.user
+                if Paciente.objects.get(user= usuario):
+                    return HttpResponseRedirect('/tomahora')
+                else:
+                    return HttpResponseRedirect('/personal')
                 return HttpResponseRedirect('/')
             else:
                 # warning
-                #messages.warning(request, 'Tu cuenta ha sido desactivada.')
+                messages.warning(request, 'Tu cuenta ha sido desactivada.')
                 #return HttpResponseRedirect('/')
                 return HttpResponse('<h1>ERROR desactivada</h1>')
         else:
             # error
-            #messages.error(request, 'Nombre de usuario o contraseña errónea.')
+            messages.error(request, 'Nombre de usuario o contraseña errónea.')
             #return HttpResponseRedirect('/')
             return HttpResponse('<h1>ERROR no existe</h1>')
     else:
@@ -160,9 +206,13 @@ def crear_usuario(request):
     if pepito:
         return HttpResponse('<h1>el usuario ya exite</h1>')
 
-    new_user = User(username=name,email=email1,firs_name=nombres,last_name=apellidos)
+    new_user = User(username=name,email=email1,first_name=nombres,last_name=apellidos)
     new_user.set_password(pass1)
     new_user.save()
+    new_paciente = Paciente(user=new_user)
+    new_paciente.save()
+    user = authenticate(username=name, password=pass1)
+    login(request, user)
     return HttpResponseRedirect('/tomahora')
 
 @login_required
@@ -174,4 +224,95 @@ def logout_view(request):
 def borrar_hora(request,id_in):
     hora = Agendamiento.objects.get(id=id_in)
     hora.desabilitado = True
+    return HttpResponseRedirect('/tomahora')
+
+@login_required
+def cambiarpass(request):
+    if not request.method == 'POST':
+        return HttpResponse('<h1>ERROR no es post</h1>')
+
+    form = ModificarP(request.POST)
+
+    if not form.is_valid():
+        return HttpResponse('<h1>Formulario Malo</h1>')
+
+    usuario =User.objects.get(username=request.user)
+    pass1= request.POST['contrasena1']
+    if not usuario.check_password(pass1):
+        return HttpResponse('<h1>Contraseña actual incorrecta</h1>')
+    pass2 =request.POST['contrasena2']
+    pass3 = request.POST['contrasena3']
+
+    if pass2 != pass3:
+        return HttpResponse('<h1>Las contraseñas ingresadas no son iguales</h1>')
+
+    usuario.set_password(pass3)
+    usuario.save()
+    return HttpResponseRedirect('/tomahora')
+
+
+def cambiaremail(request):
+    if not request.method == 'POST':
+        return HttpResponse('<h1>ERROR no es post</h1>')
+
+    form = ModificarE(request.POST)
+
+    if not form.is_valid():
+        return HttpResponse('<h1>Formulario Malo</h1>')
+
+    usuario =User.objects.get(username=request.user)
+
+    email1 =request.POST['correo1']
+    email2 = request.POST['correo2']
+
+    if email1 != email2:
+        return HttpResponse('<h1>Los correos ingresados no son iguales</h1>')
+
+    usuario.email= email1
+    usuario.save()
+    return HttpResponseRedirect('/tomahora')
+
+def cambiartelefonoc(request):
+    if not request.method == 'POST':
+        return HttpResponse('<h1>ERROR no es post</h1>')
+
+    form = ModificarTc(request.POST)
+
+    if not form.is_valid():
+        return HttpResponse('<h1>Formulario Malo</h1>')
+
+    usuario =User.objects.get(id=request.user.id)
+    paciente = Paciente.objects.get(user = usuario)
+    telefonoc1 =request.POST['telefonoc1']
+    telefonoc2 = request.POST['telefonoc2']
+
+    if telefonoc1 != telefonoc2:
+        return HttpResponse('<h1>Los telefonos ingresados no son iguales</h1>')
+
+    paciente.telefono_c= telefonoc1
+    paciente.save()
+    return HttpResponseRedirect('/tomahora')
+
+def cambiartelefonof(request):
+    if not request.method == 'POST':
+        return HttpResponse('<h1>ERROR no es post</h1>')
+
+    form = ModificarTf(request.POST)
+
+    if not form.is_valid():
+        #error = True
+        #return render_to_response('tomahora.html',{'error':error},context_instance=RequestContext(request))
+        messages.warning(request, 'Tu cuenta ha sido desactivada.')
+        return HttpResponse('<h1>Formulario Malo</h1>')
+
+    usuario =User.objects.get(username=request.user)
+    paciente = Paciente.objects.get(user = usuario)
+    telefonof1 =request.POST['telefonof1']
+    telefonof2 = request.POST['telefonof2']
+
+    if telefonof1 != telefonof2:
+        return HttpResponse('<h1>Los telefonos ingresados no son iguales</h1>')
+
+    paciente.telefono_f= telefonof1
+    paciente.save()
     return HttpResponseRedirect('/tomahora')

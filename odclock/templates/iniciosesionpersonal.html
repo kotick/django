@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block MAIN %}
+<div class="centro" style="border: 1px solid #d0d0d0; padding-bottom: 2%;">
+	<h2>Bienvenido</h2>
+	<h3>Si no posee una cuenta, por favor solicitarla al administrador</h3>
+    <form action="/login" method="post">
+        {% csrf_token %}
+        {{login_form.as_p}}
+        <input type="submit" class="btn" value="Ingresar">
+    </form>
+</div>
+{% endblock %}

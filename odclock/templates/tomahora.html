@@ -1,6 +1,5 @@
 {% extends 'base.html' %}
 {% block MAIN %}
-{% if not user.is_anonymous %}
 <div class="tabbable tabs-left">      
 	<ul id="myTab" class="nav nav-tabs">
 		<li class="active"><a href="#informacion" data-toggle="tab">Informaciones</a></li>
@@ -10,6 +9,12 @@
 	</ul>
 	<div id="myTabContent" class="tab-content">
 		<div class="tab-pane fade in active" id="informacion">
+			{%if error%}
+				<div class="alert alert-error">
+		        	<button type="button" class="close" data-dismiss="alert">×</button>
+		        	<strong>ERROR</strong> Formulario mal llenado.
+		        </div>
+			{%endif%}
 			<h3>Bienvenido</h3>
 			<h2>Bla Bla Bla</h3>
 			<p>Mau Mau Mau</p>
@@ -51,38 +56,76 @@
 			{%endif%}
 		</div>
 		<div class="tab-pane fade" id="tomar">
+		{% block CALENDAR %}{% endblock %}
 		</div>
 		<div class="tab-pane fade" id="administrar">
+			<h3>Nombre de usuario: </h3>{{user.username}}
+			<h3>Correo: </h3>{{user.email}}
+			<h3>Telefono Celular: </h3>{{user.paciente.telefono_c}}
+			<h3>Telefono Fijo: </h3>{{user.paciente.telefono_f}}
+			<div class="accordion" id="accordion2">
+                <div class="accordion-group">
+                    <div class="accordion-heading">
+	                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion2" href="#collapseOne">Modificar Contraseña</a>
+                    </div>
+                    <div id="collapseOne" class="accordion-body collapse" style="height: 0px;">
+	                    <div class="accordion-inner">
+        				    <form action="modificar/password" method="post">
+						        {% csrf_token %}
+						        {{modificarp_form.as_p}}
+					        	<input type="submit" class="btn" value="Registrarse">
+					    	</form>	 	                    	
+	                    	
+	                    </div>
+                    </div>
+                </div>
+                <div class="accordion-group">
+                  <div class="accordion-heading">
+                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion2" href="#collapseTwo">Modificar Correo electronico</a>
+                    </div>
+                    <div id="collapseTwo" class="accordion-body collapse" style="height: 0px;">
+	                    <div class="accordion-inner">
+        				    <form action="modificar/correo" method="post">
+						        {% csrf_token %}
+						        {{modificare_form.as_p}}
+					        	<input type="submit" class="btn" value="Registrarse">
+					    	</form>	                    	
+	                    	
+	                    </div>
+                    </div>
+                </div>
+                <div class="accordion-group">
+                    <div class="accordion-heading">
+                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion2" href="#collapseThree">Modificar Telefono Celular</a>
+                    </div>
+                    <div id="collapseThree" class="accordion-body collapse" style="height: 0px;">
+                    	<div class="accordion-inner">
+        				    <form action="modificar/telefonocelular" method="post">
+						        {% csrf_token %}
+						        {{modificartc_form.as_p}}
+					        	<input type="submit" class="btn" value="Registrarse">
+					    	</form>
+                    		
+                    	</div>
+                    </div>
+                </div>
+                <div class="accordion-group">
+                    <div class="accordion-heading">
+                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion2" href="#collapseFour">Modificar Telefono Fijo</a>
+                    </div>
+                    <div id="collapseFour" class="accordion-body collapse" style="height: 0px;">
+                    	<div class="accordion-inner">
+        				    <form action="modificar/telefonofijo" method="post">
+						        {% csrf_token %}
+						        {{modificartf_form.as_p}}
+					        	<input type="submit" class="btn" value="Registrarse">
+					    	</form>                    		                    		
+                    		
+                    	</div>
+                    </div>
+                </div>	                
+            </div>
 		</div>
 	</div>
 </div>
-{%else%}
-<div class="centro" style="border: 1px solid #d0d0d0; padding-bottom: 2%;">
-	<h2>Bienvenido</h2>
-	<h3>A nuestro moderno sistema de toma horar, donde podra reservar, revisar y eliminar una hora desde la comodidad de su casa</h3>
-    <form action="/login" method="post">
-        {% csrf_token %}
-        {{login_form.as_p}}
-        <input type="submit" class="btn" value="Ingresar">
-    </form>
-    <a data-toggle="modal" href="#registro" class="btn btn-primary btn-large">Registrate</a>
-</div>
-
-<div id="registro" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
-	<div class="modal-header">
-		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-		<h3 id="myModalLabel">Modal Heading</h3>
-	</div>
-	<div class="modal-body">
-	    <form action="/login" method="post">
-	        {% csrf_token %}
-	        {{regis_form.as_p}}
-        	<input type="submit" class="btn" value="Ingresar">
-    	</form>
-	</div>
-	<div class="modal-footer">
-		<button class="btn btn-primary">Cerrar</button>
-	</div>
-</div>
-{% endif %} 
 {% endblock %}

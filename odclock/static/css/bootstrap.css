@@ -4386,13 +4386,12 @@ input[type="submit"].btn.btn-mini {
 .navbar-inner:after {
   display: table;
   line-height: 0;
-  content: "";
 }
 
 .navbar-inner:after {
   clear: both;
 }
-
+background-color:red;
 .navbar .container {
   width: auto;
 }

@@ -59,9 +59,17 @@ def ubicacion(request):
         context_instance=RequestContext(request)
     )
 
-def tomahora(request):    
+@login_required
+def paciente(request):    
     title = 'Clinica Odontologica'
     usuario = User.objects.get(username=request.user)
+
+    if request.user.first_name =='Dentista':
+        return HttpResponseRedirect('/')
+
+    if request.user.first_name =='Secretaria':
+        return HttpResponseRedirect('/')
+
     if Paciente.objects.filter(user=usuario):
         agendamientos = Agendamiento.objects.filter(paciente= usuario.paciente)
         modificarp_form = ModificarP()
@@ -70,7 +78,7 @@ def tomahora(request):
         modificartf_form = ModificarTf()
         error = False
         return render_to_response(        
-            'tomahora.html',
+            'paciente.html',
             {
                 'title': title,
                 'agendamientos': agendamientos,
@@ -98,70 +106,6 @@ def iniciosesionpaciente(request):
         },
         context_instance=RequestContext(request)
     )
-
-
-def quienessomos(request):    
-    title = 'Clinica Odontologica'
-    return render_to_response(
-        'quienessomos.html',
-        {
-            'title': title,
-        },
-        context_instance=RequestContext(request)
-    )
-
-    
-def personal(request):
-    dentista = False
-    secretaria = False
-    administrador = False
-    Adentista_form=AgregarDentista()
-    Edentista_form=EliminarDentista()
-    Ingresar_form=IngresarOferta()
-    Asignar_form=AsignarEspecialidad()
-    Aespecialidad_form=AgregarEspecialidad()
-    Eespecialidad_form=EliminarEspecialidad()
-    Abox_form=AgregarBox()
-    Ebox_form=EliminarBox()
-    Eoferta_form=BorrarOferta()
-    usuario = User.objects.get(username = request.user)
-    if Paciente.objects.filter(user= usuario):
-        return HttpResponseRedirect('/sesionpersonal')
-
-    else:
-
-        if usuario.first_name =='Dentista':
-            dentista= True
-            if usuario.dentista.administrador:
-                administrador = True
-
-        if usuario.first_name =='Secretaria':
-            secretaria = True
-            if usuario.secretaria.administrador:
-                administrador = True            
-        title = 'Clinica Odontologica'
-        login_form = LoginForm()
-        return render_to_response(        
-            'personal.html',
-            {
-                'title': title,
-                'login_form': login_form,
-                'dentista':dentista,
-                'secretaria':secretaria,
-                'administrador':administrador,
-                'Adentista_form':Adentista_form,
-                'Edentista_form':Edentista_form,
-                'Ingresar_form':Ingresar_form,
-                'Asignar_form':Asignar_form,
-                'Aespecialidad_form':Aespecialidad_form,
-                'Eespecialidad_form':Eespecialidad_form,
-                'Abox_form':Abox_form,
-                'Ebox_form':Ebox_form,
-                'Eoferta_form':Eoferta_form,
-
-            },
-            context_instance=RequestContext(request)
-        )    
 def iniciosesionpersonal(request):
     title = 'Clinica Odontologica'
     login_form = LoginForm()
@@ -173,6 +117,90 @@ def iniciosesionpersonal(request):
         },
         context_instance=RequestContext(request)
     )
+
+def quienessomos(request):    
+    title = 'Clinica Odontologica'
+    return render_to_response(
+        'quienessomos.html',
+        {
+            'title': title,
+        },
+        context_instance=RequestContext(request)
+    )
+
+@login_required
+def dentista(request):    
+    title = 'Clinica Odontologica'
+    return render_to_response(
+        'dentista.html',
+        {
+            'title': title,
+        },
+        context_instance=RequestContext(request)
+    )
+
+@login_required
+def secretaria(request):    
+    title = 'Clinica Odontologica'
+    return render_to_response(
+        'secretaria.html',
+        {
+            'title': title,
+        },
+        context_instance=RequestContext(request)
+    )
+   
+@login_required 
+def administrador(request):
+    soy="/dentista"
+    Adentista_form=AgregarDentista()
+    Edentista_form=EliminarDentista()
+    Ingresar_form=IngresarOferta()
+    Borrar_form=BorrarOferta()
+    Asignar_form=AsignarEspecialidad()
+    Desasignar_form=DesasignarEspecialidad()
+    Aespecialidad_form=AgregarEspecialidad()
+    Eespecialidad_form=EliminarEspecialidad()
+    Abox_form=AgregarBox()
+    Ebox_form=EliminarBox()
+    Asecretaria_form=AgregarSecretaria()
+    Esecretaria_form=EliminarSecretaria()
+
+    if request.user.first_name =='Dentista':
+        if request.user.last_name !='Administrador':
+            return HttpResponseRedirect('/dentista')
+    if request.user.first_name =='Secretaria':
+        if request.user.last_name !='Administrador':
+            return HttpResponseRedirect('/secretaria')    
+    if request.user.first_name =='Paciente':
+        return HttpResponseRedirect('/')
+
+    else:
+          
+        title = 'Clinica Odontologica'
+        login_form = LoginForm()
+        return render_to_response(        
+            'administrador.html',
+            {
+                'title': title,
+                'soy':soy,
+                'Adentista_form':Adentista_form,
+                'Edentista_form':Edentista_form,
+                'Ingresar_form':Ingresar_form,
+                'Borrar_form':Borrar_form,
+                'Asignar_form':Asignar_form,
+                'Aespecialidad_form':Aespecialidad_form,
+                'Eespecialidad_form':Eespecialidad_form,
+                'Abox_form':Abox_form,
+                'Ebox_form':Ebox_form,
+                'Asecretaria_form':Asecretaria_form,
+                'Esecretaria_form':Esecretaria_form,
+                
+
+            },
+            context_instance=RequestContext(request)
+        )    
+
 
 def login_view(request):
     """
@@ -190,9 +218,14 @@ def login_view(request):
                 # redireccionar al inicio
                 usuario = User.objects.get(username=user)
                 if usuario.first_name =='Paciente':
-                    return HttpResponseRedirect('/tomahora')
+                    return HttpResponseRedirect('/paciente')
                 else:
-                    return HttpResponseRedirect('/personal')
+                    if usuario.first_name =='Dentista':
+                        return HttpResponseRedirect('/dentista')
+
+                    if usuario.first_name =='Secretaria':
+                        return HttpResponseRedirect('/secretaria')
+
                 return HttpResponseRedirect('/')
             else:
                 # warning
@@ -353,10 +386,150 @@ def cambiartelefonof(request):
     return HttpResponseRedirect('/tomahora')
 
 def agregardentista(request):
-    return HttpResponseRedirect('/personal')
+    if not request.method == 'POST':
+        return HttpResponse('<h1>ERROR no es post</h1>')
+
+    form = RegisForm(request.POST)
+
+    if not form.is_valid():
+        return HttpResponse('<h1>Formulario Malo</h1>')
+
+    name = request.POST['username']
+    nombres = request.POST['nombres']
+    apellidop = request.POST['apellidop']
+    apellidom = request.POST['apellidom']
+    password = request.POST['password']
+    email = request.POST['email']
+    telefonoc = request.POST['telefonoc']
+    telefonof = request.POST['telefonof']
+    run_colegio = request.POST['run_colegio']
+
+    new_user = User(username=name,email=email1,first_name="Dentista")
+    new_user.set_password(pass1)
+    new_user.save()
+    new_dentista = Dentista(user=new_user,nombres=nombres,apellido_p=apellidop,apellido_m=apellidom,telefono_c=telefonoc,telefono_f=telefonof,run_colegio=run_colegio,administrador=False)
+    new_dentista.save()
+    user = authenticate(username=name, password=pass1)
+    login(request, user)
+    return HttpResponseRedirect('/')
+
+def agregarsecretaria(request):
+    if not request.method == 'POST':
+        return HttpResponse('<h1>ERROR no es post</h1>')
+
+    form = RegisForm(request.POST)
+
+    if not form.is_valid():
+        return HttpResponse('<h1>Formulario Malo</h1>')
+
+    name = request.POST['username']
+    nombres = request.POST['nombres']
+    apellidop = request.POST['apellidop']
+    apellidom = request.POST['apellidom']
+    password = request.POST['password']
+    email = request.POST['email']
+    telefonoc = request.POST['telefonoc']
+    telefonof = request.POST['telefonof']
+
+    new_user = User(username=name,email=email1,first_name="Dentista")
+    new_user.set_password(pass1)
+    new_user.save()
+    new_secretaria = Secretaria(user=new_user,nombres=nombres,apellido_p=apellidop,apellido_m=apellidom,telefono_c=telefonoc,telefono_f=telefonof,administrador= False)
+    new_secretaria.save()
+    user = authenticate(username=name, password=pass1)
+    login(request, user)
+    return HttpResponseRedirect('/')
+
+def agregarespecialidad(request):
+    if not request.method == 'POST':
+        return HttpResponse('<h1>ERROR no es post</h1>')
+
+    form = RegisForm(request.POST)
+
+    if not form.is_valid():
+        return HttpResponse('<h1>Formulario Malo</h1>')
+    
+    nombre = request.POST['nombre']
+    cantidad = request.POST['cantidad']
+
+    new_especialidad= Especialidad(nombre=nombre,cantidad_b=cantidad,desabilitado=False)
+    new_especialidad.save()
+    return HttpResponseRedirect('/')
+
+def agregarbox(request):
+    if not request.method == 'POST':
+        return HttpResponse('<h1>ERROR no es post</h1>')
+
+    form = RegisForm(request.POST)
+
+    if not form.is_valid():
+        return HttpResponse('<h1>Formulario Malo</h1>')
+    
+    nombre = request.POST['nombre']
+
+    new_box= Box(nombre=nombre,desabilitado=False)
+    new_box.save()
+    return HttpResponseRedirect('/')
+    
 def eliminardentista(request):
-    return HttpResponseRedirect('/personal')
+    if not request.method == 'POST':
+        return HttpResponse('<h1>ERROR no es post</h1>')
+
+    form = RegisForm(request.POST)
+
+    if not form.is_valid():
+        return HttpResponse('<h1>Formulario Malo</h1>')
+    
+    dentista = request.POST['username']
+    dentista.desabilitado=True
+    dentista.save()
+    return HttpResponseRedirect('/')
+
+def eliminarsecretaria(request):
+    if not request.method == 'POST':
+        return HttpResponse('<h1>ERROR no es post</h1>')
+
+    form = RegisForm(request.POST)
+
+    if not form.is_valid():
+        return HttpResponse('<h1>Formulario Malo</h1>')
+    
+    secretaria = request.POST['username']
+    secretaria.desabilitado=True
+    secretaria.save()
+    return HttpResponseRedirect('/')
+
+def eliminarespecialidad(request):
+    if not request.method == 'POST':
+        return HttpResponse('<h1>ERROR no es post</h1>')
+
+    form = RegisForm(request.POST)
+
+    if not form.is_valid():
+        return HttpResponse('<h1>Formulario Malo</h1>')
+    
+    especialidad = request.POST['identificador']
+    especialidad.desabilitado=True
+    especialidad.save()
+    return HttpResponseRedirect('/')
+
+def eliminarbox(request):
+    if not request.method == 'POST':
+        return HttpResponse('<h1>ERROR no es post</h1>')
+
+    form = RegisForm(request.POST)
+
+    if not form.is_valid():
+        return HttpResponse('<h1>Formulario Malo</h1>')
+    
+    box = request.POST['identificador']
+    box.desabilitado=True
+    box.save()
+    return HttpResponseRedirect('/')
+
 def asignarespecialidad(request):
+    return HttpResponseRedirect('/personal')
+def desasignarespecialidad(request):
     return HttpResponseRedirect('/personal')
 def ingresaroferta(request):
     return HttpResponseRedirect('/personal')

@@ -58,6 +58,10 @@ class AsignarEspecialidad(forms.Form):
 	username =forms.ModelChoiceField(queryset=Dentista.objects.all(),widget=forms.Select(),label= 'RUN')
 	especialidad = forms.ModelChoiceField(queryset=Especialidad.objects.all(),widget=forms.Select(),label= 'RUN')
 
+class DesasignarEspecialidad(forms.Form):
+	username =forms.ModelChoiceField(queryset=Dentista.objects.all(),widget=forms.Select(),label= 'RUN')
+	especialidad = forms.ModelChoiceField(queryset=Especialidad.objects.all(),widget=forms.Select(),label= 'RUN')
+
 class AgregarEspecialidad(forms.Form):
     nombre = forms.CharField(widget=forms.TextInput(attrs={'placeholder':'Nombre'}),label= 'Nombre')
     cantidad = forms.CharField(widget=forms.TextInput(attrs={'placeholder':'Numero de Bloques estimada'}),label= 'N°')

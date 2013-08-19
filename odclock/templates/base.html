@@ -29,13 +29,13 @@
                   <ul class="nav">
                     <li><a href="ubicacion">Ubicación</a></li>
                     {% if not user.is_anonymous %}
-                      <li><a href="tomahora">Toma Hora</a></li>
+                      <li><a href="paciente">Toma Hora</a></li>
                     {%else%}
                       <li><a href="sesionpaciente">Toma Hora</a></li>
                     {% endif %}
                     <li><a href="odclock">Quienes Somos</a></li>
-                    {% if not user.is_anonymous %}                      
-                      <li><a href="personal">Personal</a></li>
+                    {% if not user.is_anonymous %}
+                      <li><a href="{{soy}}">Personal</a></li>
                     {%else%}
                       <li><a href="sesionpersonal">Personal</a></li>
                     {% endif %}

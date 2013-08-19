@@ -1,4 +1,49 @@
 {% extends 'base.html' %}
 {% block MAIN %}
+<div class="tabbable tabs-left">      
+	<ul id="myTab" class="nav nav-tabs">
+		<li class="active"><a href="#informacion" data-toggle="tab">Informaciones</a></li>
+		<li><a href="#adentista" data-toggle="tab">Administrar Dentistas</a></li>
+		<li><a href="#aespecialidad" data-toggle="tab">Administrar Especialidades</a></li>
+		<li><a href="#abox" data-toggle="tab">Administrar Boxes</a></li>
+		<li><a href="#administrar" data-toggle="tab">Administrar Cuenta</a></li>
+	</ul>
+	<div id="myTabContent" class="tab-content">
+		<div class="tab-pane fade in active" id="informacion">
+			<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quas, omnis, animi tenetur obcaecati reprehenderit alias deserunt sit. Voluptatem, ratione, natus, deleniti sequi iure tempora eius quaerat nesciunt rerum sunt voluptas.</p>
+		</div>
+		<div class="tab-pane fade" id="adentista">
+			<a data-toggle="modal" href="#myModal" class="btn btn-primary ">Registrar un nuevo Dentista</a>
+
+		</div>
+		<div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+              <h3 id="myModalLabel">Agregar un nuevo dentista</h3>
+            </div>
+			<form action="/crear/usuario" method="post">
+            <div class="modal-body">
+			        {% csrf_token %}
+			        {{Adentista_form.as_p}}
+            </div>
+            <div class="modal-footer">
+        		<input type="submit" class="btn" value="Registrarse">
+          		<button class="btn" data-dismiss="modal">Cerrar</button>
+            </div>
+            </form>
+          </div>
+		<div class="tab-pane fade" id="aespecialidad">
+			<p>hiohoosa</p>
+		</div>
+		<div class="tab-pane fade" id="abox">
+			<p>hiohoosa</p>
+		</div>
+		<div class="tab-pane fade" id="administrar">
+			<p>haohoasds</p>
+		</div>
+	</div>
+</div>
+
+
 
 {% endblock %}

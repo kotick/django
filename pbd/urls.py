@@ -16,10 +16,16 @@ urlpatterns = patterns('',
     url(r'^ubicacion$', 'odclock.views.ubicacion', name='ubicacion'),
     url(r'^tomahora$', 'odclock.views.tomahora', name='tomahora'),
     url(r'^odclock$', 'odclock.views.quienessomos', name='quienessomos'),
-    url(r'^personal$', 'odclock.views.seccionpersonal', name='seccionpersonal'),
+    url(r'^personal$', 'odclock.views.personal', name='personal'),
     url(r'^login$', 'odclock.views.login_view'),
     url(r'^logout$', 'odclock.views.logout_view'),
     url(r'^borrar/hora/(\d+)/$', 'odclock.views.borrar_hora'),
+    url(r'^agregardentista$', 'odclock.views.agregardentista'),
+    url(r'^eliminardentista$', 'odclock.views.eliminardentista'),
+    url(r'^asignarespecialidad$', 'odclock.views.asignarespecialidad'),
+    url(r'^ingresaroferta$', 'odclock.views.ingresaroferta'),
+    url(r'^eliminaroferta$', 'odclock.views.eliminaroferta'),
+
 
     url(r'^admin/', include(admin.site.urls))
 )

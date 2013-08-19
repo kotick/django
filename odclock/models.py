@@ -5,34 +5,57 @@ from django.contrib.auth.models import User
 
 class Paciente(models.Model):
     user = models.OneToOneField(User,primary_key=True)
-    nombre = models.CharField(max_length=30)
-    telefono_c = models.CharField(max_length=30)
-    telefono_f = models.CharField(max_length=30)
+    nombres = models.CharField(max_length=100)
+    apellido_p = models.CharField(max_length=100)
+    apellido_m = models.CharField(max_length=100)
+    telefono_c = models.CharField(max_length=100)
+    telefono_f = models.CharField(max_length=100)
     administrador = models.BooleanField()
     ficha = models.TextField()
-    prevision = models.CharField(max_length=30)
-    contrasena = models.CharField(max_length=30)
+    prevision = models.CharField(max_length=100)
+    contrasena = models.CharField(max_length=100)
     desabilitado = models.BooleanField()
+
+    def __unicode__(self):
+        return self.user.username
+
 
 class Dentista(models.Model):
     user = models.OneToOneField(User,primary_key=True)
-    run_colegio = models.CharField(max_length=30)
-    telefono_c = models.CharField(max_length=30)
-    telefono_f = models.CharField(max_length=30)
+    nombres = models.CharField(max_length=100)
+    apellido_p = models.CharField(max_length=100)
+    apellido_m = models.CharField(max_length=100)
+    telefono_c = models.CharField(max_length=100)
+    run_colegio = models.CharField(max_length=100)
+    telefono_c = models.CharField(max_length=100)
+    telefono_f = models.CharField(max_length=100)
     administrador = models.BooleanField()
-    contrasena = models.CharField(max_length=30)
+    contrasena = models.CharField(max_length=100)
     desabilitado = models.BooleanField()
+    def __unicode__(self):
+        return self.user.username
+
 
 class Secretaria(models.Model):
     user = models.OneToOneField(User,primary_key=True)
-    telefono_c = models.CharField(max_length=30)
-    telefono_f = models.CharField(max_length=30)
+    nombres = models.CharField(max_length=100)
+    apellido_p = models.CharField(max_length=100)
+    apellido_m = models.CharField(max_length=100)    
+    telefono_c = models.CharField(max_length=100)
+    telefono_f = models.CharField(max_length=100)
     administrador = models.BooleanField()
-    contrasena = models.CharField(max_length=30)
+    contrasena = models.CharField(max_length=100)
     desabilitado = models.BooleanField()
+    def __unicode__(self):
+        return self.user.username
+
 
 class Box(models.Model):
     desabilitado = models.BooleanField()
+    nombre = models.CharField(max_length=100)
+    def __unicode__(self):
+        return self.nombre
+
 
 class Calendario(models.Model):
     fecha = models.DateField()
@@ -40,25 +63,27 @@ class Calendario(models.Model):
     Bloque_horario = models.IntegerField(max_length=32)
 
 class Prestacion(models.Model):
-    nombre = models.CharField(max_length=30)
+    nombre = models.CharField(max_length=100)
     detalles = models.TextField()
     desabilitado = models.BooleanField()
 
 class Especialidad(models.Model):
-    nombre = models.CharField(max_length=30)
-    cantidad_b = models.IntegerField(max_length=32)
+    nombre = models.CharField(max_length=100)
+    cantidad_b = models.IntegerField(max_length=100)
     desabilitado = models.BooleanField()
+    def __unicode__(self):
+        return self.nombre
 
 class Plan_tratamiento(models.Model):
     especialidad=models.ForeignKey(Especialidad)
-    nombre = models.CharField(max_length=30)
-    sesiones = models.IntegerField(max_length=30)
-    bloques = models.IntegerField(max_length=32)
+    nombre = models.CharField(max_length=100)
+    sesiones = models.IntegerField(max_length=100)
+    bloques = models.IntegerField(max_length=100)
     detalles = models.TextField()
     desabilitado = models.BooleanField()
 
 class Atencion(models.Model):
-    tipo = models.IntegerField(max_length=4)
+    tipo = models.IntegerField(max_length=100)
     dentista=models.ForeignKey(Dentista)
     plan_tratamiento= models.ForeignKey(Plan_tratamiento)
     box = models.ForeignKey(Box)
@@ -107,9 +132,9 @@ class Agendamiento(models.Model):
 
 class Auditoria(models.Model):
     momento = models.DateTimeField()
-    accion = models.CharField(max_length=30)
-    usuario = models.CharField(max_length=30)
-    tabla = models.CharField(max_length=30)
+    accion = models.CharField(max_length=100)
+    usuario = models.CharField(max_length=100)
+    tabla = models.CharField(max_length=100)
 
 class Calendario_box(models.Model):
     ocupado = models.BooleanField()

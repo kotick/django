@@ -54,10 +54,14 @@
           </div>
         </div>
       </div>
-      <div class="container-fluid">
+      <div class="container-fluid"style="background-color:#F6F4F0;">
         <div class="row-fluid">
-          <div class="span8 offset2">
+          <div class="span2">
+          </div>
+          <div class="span8" style="background-color:white;">
         {% block MAIN %}{% endblock %}
+          </div>
+          <div class="span2">
           </div>
         </div>     
         <footer>
@@ -66,7 +70,7 @@
       </div>
       <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
       <script>window.jQuery || document.write('<script src="{{STATIC_URL}}/js/vendor/jquery-1.9.1.min.js"><\/script>')</script>
-      <script src="{{STATIC_URL}}/js/vendor/bootstrap.min.js"></script>
+      <script src="{{STATIC_URL}}/js/vendor/bootstrap.js"></script>
       <script src="{{STATIC_URL}}/js/main.js"></script>
     </body>
 </html>

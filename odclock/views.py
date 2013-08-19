@@ -111,20 +111,54 @@ def quienessomos(request):
     )
 
     
-def seccionpersonal(request):
-
+def personal(request):
+    dentista = False
+    secretaria = False
+    administrador = False
+    Adentista_form=AgregarDentista()
+    Edentista_form=EliminarDentista()
+    Ingresar_form=IngresarOferta()
+    Asignar_form=AsignarEspecialidad()
+    Aespecialidad_form=AgregarEspecialidad()
+    Eespecialidad_form=EliminarEspecialidad()
+    Abox_form=AgregarBox()
+    Ebox_form=EliminarBox()
+    Eoferta_form=BorrarOferta()
     usuario = User.objects.get(username = request.user)
     if Paciente.objects.filter(user= usuario):
         return HttpResponseRedirect('/sesionpersonal')
 
     else:
+
+        if usuario.first_name =='Dentista':
+            dentista= True
+            if usuario.dentista.administrador:
+                administrador = True
+
+        if usuario.first_name =='Secretaria':
+            secretaria = True
+            if usuario.secretaria.administrador:
+                administrador = True            
         title = 'Clinica Odontologica'
         login_form = LoginForm()
         return render_to_response(        
-            'seccionpersonal.html',
+            'personal.html',
             {
                 'title': title,
                 'login_form': login_form,
+                'dentista':dentista,
+                'secretaria':secretaria,
+                'administrador':administrador,
+                'Adentista_form':Adentista_form,
+                'Edentista_form':Edentista_form,
+                'Ingresar_form':Ingresar_form,
+                'Asignar_form':Asignar_form,
+                'Aespecialidad_form':Aespecialidad_form,
+                'Eespecialidad_form':Eespecialidad_form,
+                'Abox_form':Abox_form,
+                'Ebox_form':Ebox_form,
+                'Eoferta_form':Eoferta_form,
+
             },
             context_instance=RequestContext(request)
         )    
@@ -154,8 +188,8 @@ def login_view(request):
             if user.is_active:
                 login(request, user)
                 # redireccionar al inicio
-                usuario = request.user
-                if Paciente.objects.get(user= usuario):
+                usuario = User.objects.get(username=user)
+                if usuario.first_name =='Paciente':
                     return HttpResponseRedirect('/tomahora')
                 else:
                     return HttpResponseRedirect('/personal')
@@ -184,7 +218,8 @@ def crear_usuario(request):
 
     name = request.POST['username']
     nombres = request.POST['nombres']
-    apellidos = request.POST['apellidos']
+    apellidop = request.POST['apellidop']
+    apellidom = request.POST['apellidom']
     pass1 = request.POST['password1']
     pass2 = request.POST['password2']
     email1 = request.POST['email1']
@@ -206,10 +241,10 @@ def crear_usuario(request):
     if pepito:
         return HttpResponse('<h1>el usuario ya exite</h1>')
 
-    new_user = User(username=name,email=email1,first_name=nombres,last_name=apellidos)
+    new_user = User(username=name,email=email1,first_name="Paciente")
     new_user.set_password(pass1)
     new_user.save()
-    new_paciente = Paciente(user=new_user)
+    new_paciente = Paciente(user=new_user,nombres=nombres,apellido_p=apellidop,apellido_m=apellidom)
     new_paciente.save()
     user = authenticate(username=name, password=pass1)
     login(request, user)
@@ -316,3 +351,14 @@ def cambiartelefonof(request):
     paciente.telefono_f= telefonof1
     paciente.save()
     return HttpResponseRedirect('/tomahora')
+
+def agregardentista(request):
+    return HttpResponseRedirect('/personal')
+def eliminardentista(request):
+    return HttpResponseRedirect('/personal')
+def asignarespecialidad(request):
+    return HttpResponseRedirect('/personal')
+def ingresaroferta(request):
+    return HttpResponseRedirect('/personal')
+def eliminaroferta(request):
+    return HttpResponseRedirect('/personal')

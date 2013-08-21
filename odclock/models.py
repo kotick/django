@@ -32,6 +32,7 @@ class Dentista(models.Model):
     administrador = models.BooleanField()
     contrasena = models.CharField(max_length=100)
     desabilitado = models.BooleanField()
+    entregohorario=models.BooleanField()
     def __unicode__(self):
         return self.user.username
 
@@ -58,7 +59,11 @@ class Box(models.Model):
 
 
 class Calendario(models.Model):
-    fecha = models.DateField()
+    dia=models.CharField(max_length=100)
+    mes=models.CharField(max_length=100)
+    ano=models.CharField(max_length=100)
+    semana=models.CharField(max_length=100)
+    diade=models.CharField(max_length=100)
     feriado = models.BooleanField()
     Bloque_horario = models.IntegerField(max_length=32)
 

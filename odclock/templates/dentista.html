@@ -1,4 +1,277 @@
 {% extends 'base.html' %}
 {% block MAIN %}
-
+<div class="tabbable tabs-left">      
+	<ul id="myTab" class="nav nav-tabs">
+		<li class="active"><a href="#informacion" data-toggle="tab">Informaciones</a></li>
+		<li><a href="#horasatencion" data-toggle="tab">Horas de atención</a></li>
+		<li><a href="#ingresaroferta" data-toggle="tab">Ingresar oferta horaria</a></li>
+		<li><a href="#pacientes" data-toggle="tab">Pacientes</a></li>
+		<li><a href="#registrar" data-toggle="tab">Registrar Atención</a></li>
+		<li><a href="#administrar" data-toggle="tab">Administrar Cuenta</a></li>
+	</ul>
+	<div id="myTabContent" class="tab-content">
+		<div class="tab-pane fade in active" id="informacion">
+			Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatibus, quidem earum harum sunt incidunt dolores mollitia? Hic, doloribus suscipit earum laudantium ab aliquam sequi a fugit minus eius consequatur dicta.
+		</div>
+		<div class="tab-pane fade" id="horasatencion">
+			{%if agendamientos%}
+				{%for agendamiento in agendamientos%}
+					{%if agendamiento.desabilitado%}
+					{%else%}
+						<table class="table table-hover table-condensed">
+							<thead> 
+								<tr>
+									<td>Especialidad</td>
+									<td>Paciente</td>
+									<td>Fecha</td>
+									<td>Hora</td>
+									<td>Eliminar Hora</td>
+								</tr>
+							</thead>                   
+							<tbody>
+								<tr>
+									<td>agendamiento.especialidad.nombre</td>
+									<td>agendamiento.paciente.nombres</td>
+									<td>agendamiento.calendario.fecha</td>
+									<td>agendamiento.calendario.bloque</td>
+									<td>
+			                            <form action="borrar/hora/{{agendamiento.id}}/" method="post">
+				                            {% csrf_token %}
+				                            <button type="submit"class="btn btn-primary">Cancelar</button>                            
+			                            </form>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					{%endif%}
+				{%endfor%}
+			{%else%}
+				<h3>No posee horas reservadas</h3>
+			{%endif%}
+		</div>
+		<div class="tab-pane fade" id="ingresaroferta">
+			<form action="/ingresaroferta" method="post">
+				{% csrf_token %}
+				<table class="table table-hover table-condensed">
+					<thead> 
+						<tr>
+							<td>Horario</td>
+							<td>Lunes</td>
+							<td>Martes</td>
+							<td>Miercoles</td>
+							<td>Jueves</td>
+							<td>Viernes</td>
+						</tr>
+					</thead>                   
+					<tbody>
+						<tr>
+							<td>08:00</td>
+							<td><label class="checkbox" data-posicion="11"><input type="checkbox"/></td>
+							<td><label class="checkbox" data-posicion="12"><input type="checkbox"/></td>
+							<td><label class="checkbox" data-posicion="13"><input type="checkbox"/></td>
+							<td><label class="checkbox" data-posicion="14"><input type="checkbox"/></td>
+							<td><label class="checkbox" data-posicion="15"><input type="checkbox"/></td>
+						</tr>
+						<tr>
+							<td>08:30</td>
+							<td><label class="checkbox"><input type="checkbox"/></td>
+							<td><label class="checkbox"><input type="checkbox"/></td>
+							<td><label class="checkbox"><input type="checkbox"/></td>
+							<td><label class="checkbox"><input type="checkbox"/></td>
+							<td><label class="checkbox"><input type="checkbox"/></td>
+						</tr>
+						<tr>
+							<td>09:00</td>
+							<td><label class="checkbox"><input type="checkbox"/></td>
+							<td><label class="checkbox"><input type="checkbox"/></td>
+							<td><label class="checkbox"><input type="checkbox"/></td>
+							<td><label class="checkbox"><input type="checkbox"/></td>
+							<td><label class="checkbox"><input type="checkbox"/></td>
+						</tr>
+						<tr>
+							<td>09:30</td>
+							<td><label class="checkbox"><input type="checkbox"/></td>
+							<td><label class="checkbox"><input type="checkbox"/></td>
+							<td><label class="checkbox"><input type="checkbox"/></td>
+							<td><label class="checkbox"><input type="checkbox"/></td>
+							<td><label class="checkbox"><input type="checkbox"/></td>
+						</tr>
+						<tr>
+							<td>10:00</td>
+							<td><label class="checkbox"><input type="checkbox"/></td>
+							<td><label class="checkbox"><input type="checkbox"/></td>
+							<td><label class="checkbox"><input type="checkbox"/></td>
+							<td><label class="checkbox"><input type="checkbox"/></td>
+							<td><label class="checkbox"><input type="checkbox"/></td>
+						</tr>
+						<tr>
+							<td>10:30</td>
+							<td><label class="checkbox"><input type="checkbox"/></td>
+							<td><label class="checkbox"><input type="checkbox"/></td>
+							<td><label class="checkbox"><input type="checkbox"/></td>
+							<td><label class="checkbox"><input type="checkbox"/></td>
+							<td><label class="checkbox"><input type="checkbox"/></td>
+						</tr>
+						<tr>
+							<td>11:00</td>
+							<td><label class="checkbox"><input type="checkbox"/></td>
+							<td><label class="checkbox"><input type="checkbox"/></td>
+							<td><label class="checkbox"><input type="checkbox"/></td>
+							<td><label class="checkbox"><input type="checkbox"/></td>
+							<td><label class="checkbox"><input type="checkbox"/></td>
+						</tr>
+						<tr>
+							<td>11:30</td>
+							<td><label class="checkbox"><input type="checkbox"/></td>
+							<td><label class="checkbox"><input type="checkbox"/></td>
+							<td><label class="checkbox"><input type="checkbox"/></td>
+							<td><label class="checkbox"><input type="checkbox"/></td>
+							<td><label class="checkbox"><input type="checkbox"/></td>
+						</tr>
+						<tr>
+							<td>12:00</td>
+							<td><label class="checkbox"><input type="checkbox"/></td>
+							<td><label class="checkbox"><input type="checkbox"/></td>
+							<td><label class="checkbox"><input type="checkbox"/></td>
+							<td><label class="checkbox"><input type="checkbox"/></td>
+							<td><label class="checkbox"><input type="checkbox"/></td>
+						</tr>
+						<tr>
+							<td>12:30</td>
+							<td><label class="checkbox"><input type="checkbox"/></td>
+							<td><label class="checkbox"><input type="checkbox"/></td>
+							<td><label class="checkbox"><input type="checkbox"/></td>
+							<td><label class="checkbox"><input type="checkbox"/></td>
+							<td><label class="checkbox"><input type="checkbox"/></td>
+						</tr>
+						<tr>
+							<td>13:00</td>
+							<td><label class="checkbox"><input type="checkbox"/></td>
+							<td><label class="checkbox"><input type="checkbox"/></td>
+							<td><label class="checkbox"><input type="checkbox"/></td>
+							<td><label class="checkbox"><input type="checkbox"/></td>
+							<td><label class="checkbox"><input type="checkbox"/></td>
+						</tr>					
+						<tr>
+							<td>13:30</td>
+							<td><label class="checkbox"><input type="checkbox"/></td>
+							<td><label class="checkbox"><input type="checkbox"/></td>
+							<td><label class="checkbox"><input type="checkbox"/></td>
+							<td><label class="checkbox"><input type="checkbox"/></td>
+							<td><label class="checkbox"><input type="checkbox"/></td>
+						</tr>					
+						<tr>
+							<td>14:00</td>
+							<td><label class="checkbox"><input type="checkbox"/></td>
+							<td><label class="checkbox"><input type="checkbox"/></td>
+							<td><label class="checkbox"><input type="checkbox"/></td>
+							<td><label class="checkbox"><input type="checkbox"/></td>
+							<td><label class="checkbox"><input type="checkbox"/></td>
+						</tr>
+						<tr>
+							<td>14:30</td>
+							<td><label class="checkbox"><input type="checkbox"/></td>
+							<td><label class="checkbox"><input type="checkbox"/></td>
+							<td><label class="checkbox"><input type="checkbox"/></td>
+							<td><label class="checkbox"><input type="checkbox"/></td>
+							<td><label class="checkbox"><input type="checkbox"/></td>
+						</tr>	
+						<tr>
+							<td>15:00</td>
+							<td><label class="checkbox"><input type="checkbox"/></td>
+							<td><label class="checkbox"><input type="checkbox"/></td>
+							<td><label class="checkbox"><input type="checkbox"/></td>
+							<td><label class="checkbox"><input type="checkbox"/></td>
+							<td><label class="checkbox"><input type="checkbox"/></td>
+						</tr>
+						<tr>
+							<td>15:30</td>
+							<td><label class="checkbox"><input type="checkbox"/></td>
+							<td><label class="checkbox"><input type="checkbox"/></td>
+							<td><label class="checkbox"><input type="checkbox"/></td>
+							<td><label class="checkbox"><input type="checkbox"/></td>
+							<td><label class="checkbox"><input type="checkbox"/></td>
+						</tr>																					
+					</tbody>
+				</table>
+				<input type="submit" class="btn" value="Ingresar Oferta">
+			</form>
+		</div>
+		<div class="tab-pane fade" id="pacientes">
+          {% block FICHA %}
+          {% endblock %}
+		</div>
+		<div class="tab-pane fade" id="registrar">
+			
+		</div>	
+		<div class="tab-pane fade" id="administrar">
+			<h3>Nombre de usuario: </h3>{{user.dentista.nombres}}
+			<h3>Correo: </h3>{{user.email}}
+			<h3>Telefono Celular: </h3>{{user.dentista.telefono_c}}
+			<h3>Telefono Fijo: </h3>{{user.dentista.telefono_f}}
+			<div class="accordion" id="accordion2">
+                <div class="accordion-group">
+                    <div class="accordion-heading">
+	                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion2" href="#collapseOne">Modificar Contraseña</a>
+                    </div>
+                    <div id="collapseOne" class="accordion-body collapse" style="height: 0px;">
+	                    <div class="accordion-inner">
+        				    <form action="modificar/password" method="post">
+						        {% csrf_token %}
+						        {{modificarp_form.as_p}}
+					        	<input type="submit" class="btn" value="Registrarse">
+					    	</form>	 	                    	
+	                    	
+	                    </div>
+                    </div>
+                </div>
+                <div class="accordion-group">
+                  <div class="accordion-heading">
+                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion2" href="#collapseTwo">Modificar Correo electronico</a>
+                    </div>
+                    <div id="collapseTwo" class="accordion-body collapse" style="height: 0px;">
+	                    <div class="accordion-inner">
+        				    <form action="modificar/correo" method="post">
+						        {% csrf_token %}
+						        {{modificare_form.as_p}}
+					        	<input type="submit" class="btn" value="Registrarse">
+					    	</form>	                    	
+	                    	
+	                    </div>
+                    </div>
+                </div>
+                <div class="accordion-group">
+                    <div class="accordion-heading">
+                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion2" href="#collapseThree">Modificar Telefono Celular</a>
+                    </div>
+                    <div id="collapseThree" class="accordion-body collapse" style="height: 0px;">
+                    	<div class="accordion-inner">
+        				    <form action="modificar/telefonocelular" method="post">
+						        {% csrf_token %}
+						        {{modificartc_form.as_p}}
+					        	<input type="submit" class="btn" value="Registrarse">
+					    	</form>
+                    		
+                    	</div>
+                    </div>
+                </div>
+                <div class="accordion-group">
+                    <div class="accordion-heading">
+                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion2" href="#collapseFour">Modificar Telefono Fijo</a>
+                    </div>
+                    <div id="collapseFour" class="accordion-body collapse" style="height: 0px;">
+                    	<div class="accordion-inner">
+        				    <form action="modificar/telefonofijo" method="post">
+						        {% csrf_token %}
+						        {{modificartf_form.as_p}}
+					        	<input type="submit" class="btn" value="Registrarse">
+					    	</form>                    		                    		
+                    		
+                    	</div>
+                    </div>
+                </div>	                
+            </div>
+		</div>					
+	</div>
+</div>
 {% endblock %}

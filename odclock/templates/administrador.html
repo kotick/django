@@ -6,44 +6,233 @@
 		<li><a href="#adentista" data-toggle="tab">Administrar Dentistas</a></li>
 		<li><a href="#aespecialidad" data-toggle="tab">Administrar Especialidades</a></li>
 		<li><a href="#abox" data-toggle="tab">Administrar Boxes</a></li>
-		<li><a href="#administrar" data-toggle="tab">Administrar Cuenta</a></li>
+		<li><a href="#asecretarias" data-toggle="tab">Administrar Secretarias</a></li>
 	</ul>
 	<div id="myTabContent" class="tab-content">
 		<div class="tab-pane fade in active" id="informacion">
 			<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quas, omnis, animi tenetur obcaecati reprehenderit alias deserunt sit. Voluptatem, ratione, natus, deleniti sequi iure tempora eius quaerat nesciunt rerum sunt voluptas.</p>
 		</div>
 		<div class="tab-pane fade" id="adentista">
-			<a data-toggle="modal" href="#myModal" class="btn btn-primary ">Registrar un nuevo Dentista</a>
-
+			<div class="row-fluid">
+				<div class="span6">
+					<a data-toggle="modal" href="#registrardentista" class="btn btn-success ">Registrar un nuevo dentista</a>
+					<a data-toggle="modal" href="#asignarespecialidad" class="btn btn-success ">Asignar especialidad</a>
+					<a data-toggle="modal" href="#ingresaroferta" class="btn btn-success ">Ingresar oferta horaria</a>
+				</div>
+				<div class="span6">
+					<a data-toggle="modal" href="#eliminardentista" class="btn btn-danger ">Eliminar un dentista</a>
+					<a data-toggle="modal" href="#desasignarespecialidad" class="btn btn-danger ">Desasignar especialidad</a>
+					<a data-toggle="modal" href="#eliminaroferta" class="btn btn-danger">Eliminar oferta horaria</a>
+				</div>
+			</div>
 		</div>
-		<div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
-            <div class="modal-header">
-              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-              <h3 id="myModalLabel">Agregar un nuevo dentista</h3>
-            </div>
-			<form action="/crear/usuario" method="post">
-            <div class="modal-body">
-			        {% csrf_token %}
-			        {{Adentista_form.as_p}}
-            </div>
-            <div class="modal-footer">
-        		<input type="submit" class="btn" value="Registrarse">
-          		<button class="btn" data-dismiss="modal">Cerrar</button>
-            </div>
-            </form>
-          </div>
 		<div class="tab-pane fade" id="aespecialidad">
-			<p>hiohoosa</p>
+			<a data-toggle="modal" href="#agregarespecialidad" class="btn btn-success ">Agregar una especialidad</a>
+			<a data-toggle="modal" href="#eliminarespecialidad" class="btn btn-danger">Eliminar una especialidad</a>
 		</div>
 		<div class="tab-pane fade" id="abox">
-			<p>hiohoosa</p>
+			<a data-toggle="modal" href="#agregarbox" class="btn btn-success ">Agregar un box</a>
+			<a data-toggle="modal" href="#eliminarbox" class="btn btn-danger">Eliminar un box</a>
 		</div>
-		<div class="tab-pane fade" id="administrar">
-			<p>haohoasds</p>
+		<div class="tab-pane fade" id="asecretarias">
+			<a data-toggle="modal" href="#agregarsecretaria" class="btn btn-success ">Agregar una secretaria</a>
+			<a data-toggle="modal" href="#eliminarsecretaria" class="btn btn-danger">Eliminar una secretaria</a>
 		</div>
 	</div>
 </div>
 
+<div id="registrardentista" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+	<div class="modal-header">
+	  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+	  <h3 id="myModalLabel">Agregando un nuevo dentista</h3>
+	</div>
+	<form action="/agregardentista" method="post">
+		<div class="modal-body">
+		        {% csrf_token %}
+		        {{Adentista_form.as_p}}
+		</div>
+		<div class="modal-footer">
+			<input type="submit" class="btn" value="Agregar">
+				<button class="btn" data-dismiss="modal">Cerrar</button>
+		</div>
+	</form>
+</div>
 
+<div id="eliminardentista" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+	<div class="modal-header">
+	  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+	  <h3 id="myModalLabel">Eliminando un dentista</h3>
+	</div>
+	<form action="/eliminardentista" method="post">
+		<div class="modal-body">
+		        {% csrf_token %}
+		        {{Edentista_form.as_p}}
+		</div>
+		<div class="modal-footer">
+			<input type="submit" class="btn" value="Eliminar">
+				<button class="btn" data-dismiss="modal">Cerrar</button>
+		</div>
+	</form>
+</div>
 
+<div id="asignarespecialidad" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+	<div class="modal-header">
+	  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+	  <h3 id="myModalLabel">Asignando una especialidad a un dentista</h3>
+	</div>
+	<form action="/asignarespecialidad" method="post">
+		<div class="modal-body">
+		        {% csrf_token %}
+		        {{Asignar_form.as_p}}
+		</div>
+		<div class="modal-footer">
+			<input type="submit" class="btn" value="Asignar">
+				<button class="btn" data-dismiss="modal">Cerrar</button>
+		</div>
+	</form>
+</div>
+<div id="desasignarespecialidad" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+	<div class="modal-header">
+	  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+	  <h3 id="myModalLabel">Desasignando una especialidad a un dentista</h3>
+	</div>
+	<form action="/desasignarespecialidad" method="post">
+		<div class="modal-body">
+		        {% csrf_token %}
+		        {{Desasignar_form.as_p}}
+		</div>
+		<div class="modal-footer">
+			<input type="submit" class="btn" value="Desasignar">
+				<button class="btn" data-dismiss="modal">Cerrar</button>
+		</div>
+	</form>
+</div>
+<div id="ingresaroferta" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+	<div class="modal-header">
+	  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+	  <h3 id="myModalLabel">Ingresando una oferta horaria a un dentista</h3>
+	</div>
+	<form action="/ingresaroferta" method="post">
+		<div class="modal-body">
+		        {% csrf_token %}
+		        {{Ingresar_form.as_p}}
+		</div>
+		<div class="modal-footer">
+			<input type="submit" class="btn" value="Ingresar">
+				<button class="btn" data-dismiss="modal">Cerrar</button>
+		</div>
+	</form>
+</div>
+<div id="eliminaroferta" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+	<div class="modal-header">
+	  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+	  <h3 id="myModalLabel">Eliminando la oferta horaria de un dentista</h3>
+	</div>
+	<form action="/eliminaroferta" method="post">
+		<div class="modal-body">
+		        {% csrf_token %}
+		        {{Borrar_form.as_p}}
+		</div>
+		<div class="modal-footer">
+			<input type="submit" class="btn" value="Eliminar">
+				<button class="btn" data-dismiss="modal">Cerrar</button>
+		</div>
+	</form>
+</div>
+<div id="agregarespecialidad" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+	<div class="modal-header">
+	  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+	  <h3 id="myModalLabel">Agregando una nueva especialidad</h3>
+	</div>
+	<form action="/eliminaroferta" method="post">
+		<div class="modal-body">
+		        {% csrf_token %}
+		        {{Aespecialidad_form.as_p}}
+		</div>
+		<div class="modal-footer">
+			<input type="submit" class="btn" value="Agregar">
+				<button class="btn" data-dismiss="modal">Cerrar</button>
+		</div>
+	</form>
+</div>
+<div id="eliminarespecialidad" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+	<div class="modal-header">
+	  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+	  <h3 id="myModalLabel">Eliminando una especialidad</h3>
+	</div>
+	<form action="/eliminaroferta" method="post">
+		<div class="modal-body">
+		        {% csrf_token %}
+		        {{Eespecialidad_form.as_p}}
+		</div>
+		<div class="modal-footer">
+			<input type="submit" class="btn" value="Eliminar">
+				<button class="btn" data-dismiss="modal">Cerrar</button>
+		</div>
+	</form>
+</div>
+<div id="agregarbox" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+	<div class="modal-header">
+	  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+	  <h3 id="myModalLabel">Agregando un nuevo box</h3>
+	</div>
+	<form action="/eliminaroferta" method="post">
+		<div class="modal-body">
+		        {% csrf_token %}
+		        {{Abox_form.as_p}}
+		</div>
+		<div class="modal-footer">
+			<input type="submit" class="btn" value="Agregar">
+				<button class="btn" data-dismiss="modal">Cerrar</button>
+		</div>
+	</form>
+</div>
+<div id="eliminarbox" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+	<div class="modal-header">
+	  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+	  <h3 id="myModalLabel">Eliminando un box</h3>
+	</div>
+	<form action="/eliminaroferta" method="post">
+		<div class="modal-body">
+		        {% csrf_token %}
+		        {{Ebox_form.as_p}}
+		</div>
+		<div class="modal-footer">
+			<input type="submit" class="btn" value="Eliminar">
+				<button class="btn" data-dismiss="modal">Cerrar</button>
+		</div>
+	</form>
+</div>
+<div id="agregarsecretaria" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+	<div class="modal-header">
+	  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+	  <h3 id="myModalLabel">Agregando una nueva secretaria</h3>
+	</div>
+	<form action="/agregarsecretaria" method="post">
+		<div class="modal-body">
+		        {% csrf_token %}
+		        {{Asecretaria_form.as_p}}
+		</div>
+		<div class="modal-footer">
+			<input type="submit" class="btn" value="Agregar">
+				<button class="btn" data-dismiss="modal">Cerrar</button>
+		</div>
+	</form>
+</div>
+<div id="eliminarsecretaria" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+	<div class="modal-header">
+	  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+	  <h3 id="myModalLabel">Eliminando una secretaria</h3>
+	</div>
+	<form action="/eliminarsecretaria" method="post">
+		<div class="modal-body">
+		        {% csrf_token %}
+		        {{Esecretaria_form.as_p}}
+		</div>
+		<div class="modal-footer">
+			<input type="submit" class="btn" value="Eliminar">
+				<button class="btn" data-dismiss="modal">Cerrar</button>
+		</div>
+	</form>
+</div>
 {% endblock %}

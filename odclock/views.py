@@ -131,10 +131,15 @@ def quienessomos(request):
 @login_required
 def dentista(request):    
     title = 'Clinica Odontologica'
+    usuario = User.objects.get(username=request.user)
+    agendamientos=Agendamiento.objects.filter(dentista=usuario.dentista)
+    verficha_form=Verficha()
     return render_to_response(
         'dentista.html',
         {
             'title': title,
+            'agendamientos':agendamientos,
+            'verficha_form':verficha_form,
         },
         context_instance=RequestContext(request)
     )
@@ -152,7 +157,6 @@ def secretaria(request):
    
 @login_required 
 def administrador(request):
-    soy="/dentista"
     Adentista_form=AgregarDentista()
     Edentista_form=EliminarDentista()
     Ingresar_form=IngresarOferta()
@@ -183,7 +187,6 @@ def administrador(request):
             'administrador.html',
             {
                 'title': title,
-                'soy':soy,
                 'Adentista_form':Adentista_form,
                 'Edentista_form':Edentista_form,
                 'Ingresar_form':Ingresar_form,
@@ -195,7 +198,7 @@ def administrador(request):
                 'Ebox_form':Ebox_form,
                 'Asecretaria_form':Asecretaria_form,
                 'Esecretaria_form':Esecretaria_form,
-                
+                'Desasignar_form':Desasignar_form,
 
             },
             context_instance=RequestContext(request)
@@ -215,16 +218,28 @@ def login_view(request):
         if user is not None:
             if user.is_active:
                 login(request, user)
-                # redireccionar al inicio
+                # redireccionar al inicio            
                 usuario = User.objects.get(username=user)
                 if usuario.first_name =='Paciente':
-                    return HttpResponseRedirect('/paciente')
+                    if usuario.paciente.desabilitado:
+                        logout(request)
+                        return HttpResponseRedirect('/')
+                    else:
+                        return HttpResponseRedirect('/paciente')
                 else:
                     if usuario.first_name =='Dentista':
-                        return HttpResponseRedirect('/dentista')
+                        if usuario.dentista.desabilitado:
+                            logout(request)
+                            return HttpResponseRedirect('/')
+                        else:
+                            return HttpResponseRedirect('/dentista')
 
                     if usuario.first_name =='Secretaria':
-                        return HttpResponseRedirect('/secretaria')
+                        if usuario.secretaria.desabilitado:
+                            logout(request)
+                            return HttpResponseRedirect('/')
+                        else:
+                            return HttpResponseRedirect('/secretaria')
 
                 return HttpResponseRedirect('/')
             else:
@@ -318,7 +333,7 @@ def cambiarpass(request):
     usuario.save()
     return HttpResponseRedirect('/tomahora')
 
-
+@login_required
 def cambiaremail(request):
     if not request.method == 'POST':
         return HttpResponse('<h1>ERROR no es post</h1>')
@@ -340,6 +355,7 @@ def cambiaremail(request):
     usuario.save()
     return HttpResponseRedirect('/tomahora')
 
+@login_required
 def cambiartelefonoc(request):
     if not request.method == 'POST':
         return HttpResponse('<h1>ERROR no es post</h1>')
@@ -361,6 +377,7 @@ def cambiartelefonoc(request):
     paciente.save()
     return HttpResponseRedirect('/tomahora')
 
+@login_required
 def cambiartelefonof(request):
     if not request.method == 'POST':
         return HttpResponse('<h1>ERROR no es post</h1>')
@@ -385,11 +402,12 @@ def cambiartelefonof(request):
     paciente.save()
     return HttpResponseRedirect('/tomahora')
 
+@login_required
 def agregardentista(request):
     if not request.method == 'POST':
         return HttpResponse('<h1>ERROR no es post</h1>')
 
-    form = RegisForm(request.POST)
+    form = AgregarDentista(request.POST)
 
     if not form.is_valid():
         return HttpResponse('<h1>Formulario Malo</h1>')
@@ -413,11 +431,12 @@ def agregardentista(request):
     login(request, user)
     return HttpResponseRedirect('/')
 
+@login_required
 def agregarsecretaria(request):
     if not request.method == 'POST':
         return HttpResponse('<h1>ERROR no es post</h1>')
 
-    form = RegisForm(request.POST)
+    form = AgregarSecretaria(request.POST)
 
     if not form.is_valid():
         return HttpResponse('<h1>Formulario Malo</h1>')
@@ -440,11 +459,12 @@ def agregarsecretaria(request):
     login(request, user)
     return HttpResponseRedirect('/')
 
+@login_required
 def agregarespecialidad(request):
     if not request.method == 'POST':
         return HttpResponse('<h1>ERROR no es post</h1>')
 
-    form = RegisForm(request.POST)
+    form = AgregarEspecialidad(request.POST)
 
     if not form.is_valid():
         return HttpResponse('<h1>Formulario Malo</h1>')
@@ -456,11 +476,12 @@ def agregarespecialidad(request):
     new_especialidad.save()
     return HttpResponseRedirect('/')
 
+@login_required
 def agregarbox(request):
     if not request.method == 'POST':
         return HttpResponse('<h1>ERROR no es post</h1>')
 
-    form = RegisForm(request.POST)
+    form = AgregarBox(request.POST)
 
     if not form.is_valid():
         return HttpResponse('<h1>Formulario Malo</h1>')
@@ -471,11 +492,12 @@ def agregarbox(request):
     new_box.save()
     return HttpResponseRedirect('/')
     
+@login_required
 def eliminardentista(request):
     if not request.method == 'POST':
         return HttpResponse('<h1>ERROR no es post</h1>')
 
-    form = RegisForm(request.POST)
+    form = EliminarDentista(request.POST)
 
     if not form.is_valid():
         return HttpResponse('<h1>Formulario Malo</h1>')
@@ -485,11 +507,12 @@ def eliminardentista(request):
     dentista.save()
     return HttpResponseRedirect('/')
 
+@login_required
 def eliminarsecretaria(request):
     if not request.method == 'POST':
         return HttpResponse('<h1>ERROR no es post</h1>')
 
-    form = RegisForm(request.POST)
+    form = EliminarSecretaria(request.POST)
 
     if not form.is_valid():
         return HttpResponse('<h1>Formulario Malo</h1>')
@@ -499,11 +522,12 @@ def eliminarsecretaria(request):
     secretaria.save()
     return HttpResponseRedirect('/')
 
+@login_required
 def eliminarespecialidad(request):
     if not request.method == 'POST':
         return HttpResponse('<h1>ERROR no es post</h1>')
 
-    form = RegisForm(request.POST)
+    form = EliminarEspecialidad(request.POST)
 
     if not form.is_valid():
         return HttpResponse('<h1>Formulario Malo</h1>')
@@ -513,11 +537,12 @@ def eliminarespecialidad(request):
     especialidad.save()
     return HttpResponseRedirect('/')
 
+@login_required
 def eliminarbox(request):
     if not request.method == 'POST':
         return HttpResponse('<h1>ERROR no es post</h1>')
 
-    form = RegisForm(request.POST)
+    form = EliminarBox(request.POST)
 
     if not form.is_valid():
         return HttpResponse('<h1>Formulario Malo</h1>')
@@ -527,11 +552,47 @@ def eliminarbox(request):
     box.save()
     return HttpResponseRedirect('/')
 
+@login_required
 def asignarespecialidad(request):
-    return HttpResponseRedirect('/personal')
+    if not request.method == 'POST':
+        return HttpResponse('<h1>ERROR no es post</h1>')
+    form = AsignarEspecialidad(request.POST)
+    if not form.is_valid():
+        return HttpResponse('<h1>Formulario Malo</h1>')
+    
+    especialidad = request.POST['especialidad']
+    username = request.POST['username']
+
+    union = Dentista_especialidad(dentista=username,especialidad=especialidad)
+    union.save()
+    
+    return HttpResponseRedirect('/administrador')
+
+@login_required
 def desasignarespecialidad(request):
-    return HttpResponseRedirect('/personal')
+
+    if not request.method == 'POST':
+        return HttpResponse('<h1>ERROR no es post</h1>')
+    form = DesasignarEspecialidad(request.POST)
+    if not form.is_valid():
+        return HttpResponse('<h1>Formulario Malo</h1>')
+    
+    especialidad = request.POST['especialidad']
+    username = request.POST['username']
+
+    union = Dentista_especialidad.objects.get(dentista=username,especialidad=especialidad)
+    union.delete()
+    
+    return HttpResponseRedirect('/administrador')
+
+@login_required
 def ingresaroferta(request):
-    return HttpResponseRedirect('/personal')
+    return HttpResponse('/')
+
+@login_required
 def eliminaroferta(request):
+    return HttpResponseRedirect('/personal')
+
+@login_required
+def verficha(request):
     return HttpResponseRedirect('/personal')

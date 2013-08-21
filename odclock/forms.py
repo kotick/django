@@ -87,3 +87,14 @@ class AgregarSecretaria(forms.Form):
 
 class EliminarSecretaria(forms.Form):
 	username =forms.ModelChoiceField(queryset=Secretaria.objects.all(),widget=forms.Select(),label= 'RUN')
+
+class Verficha(forms.Form):
+	username =forms.CharField(widget=forms.TextInput(attrs={'placeholder':'RUN'}),label= 'RUN')
+
+class VerhorariosE(forms.Form):
+	especialidad =forms.ModelChoiceField(queryset=Especialidad.objects.all(),widget=forms.Select(),label= 'Nombre de  la especialidad')
+	username =forms.ModelChoiceField(queryset=Dentista.objects.filter(),widget=forms.Select(),label= 'RUN')
+
+class VerhorariosD(forms.Form):
+	username =forms.ModelChoiceField(queryset=Dentista.objects.all(),widget=forms.Select(),label= 'RUN')
+	especialidad =forms.ModelChoiceField(queryset=Especialidad.objects.all(),widget=forms.Select(),label= 'Nombre de  la especialidad')

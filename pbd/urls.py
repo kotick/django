@@ -34,5 +34,6 @@ urlpatterns = patterns('',
     url(r'^desasignarespecialidad$', 'odclock.views.desasignarespecialidad'),
     url(r'^ingresaroferta$', 'odclock.views.ingresaroferta'),
     url(r'^eliminaroferta$', 'odclock.views.eliminaroferta'),
+    url(r'^verficha$', 'odclock.views.verficha'),
     url(r'^admin/', include(admin.site.urls))
 )

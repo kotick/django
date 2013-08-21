@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% block MAIN %}
+<div class="centro">	
 	<h2>Bienvenido</h2>
 	<h3>Si no posee una cuenta, por favor solicitarla al administrador</h3>
     <form action="/login" method="post">
@@ -7,4 +8,6 @@
         {{login_form.as_p}}
         <input type="submit" class="btn" value="Ingresar">
     </form>
+</div>
+
 {% endblock %}

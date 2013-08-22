@@ -37,6 +37,23 @@ from django.core.cache import cache
 from django.template import loader, Context
 
 
+def oli(request):
+    title='Clinica Odontologica'
+    return render_to_response(
+        'oli.html',
+        {
+            'title':title,
+        },
+        context_instance=RequestContext(request)
+
+
+
+        )
+
+
+    
+
+
 def index(request):
     title = 'Clinica Odontologica'
     return render_to_response(
@@ -596,3 +613,20 @@ def eliminaroferta(request):
 @login_required
 def verficha(request):
     return HttpResponseRedirect('/personal')
+
+
+
+def test(request):
+    #acá se recibe la wea con el metodo post, y podemos hacer un metodo
+    #que devuelva la lista de especialidades dependiendo del dentista uju!!!!
+    #a="nepe"
+    #b='<option>'+a+'</option>'
+    a =[]
+    a.append("p")
+    a.append("i")
+    a.append("c")
+    a.append("o")
+
+    return HttpResponse(request.POST['coso'])
+    #return HttpResponse(a)
+    #return HttpResponse('<h1>TEST '+ request.POST['a'] +','+request.POST['b'] +'</h1>')

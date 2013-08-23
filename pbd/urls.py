@@ -1,6 +1,10 @@
 from django.conf.urls import patterns, include, url
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
 from django.contrib import admin
+# from dajaxice.core import dajaxice_autodiscover, dajaxice_config
+# dajaxice_autodiscover()
+
 admin.autodiscover()
 
 urlpatterns = patterns('',
@@ -35,6 +39,17 @@ urlpatterns = patterns('',
     url(r'^ingresaroferta$', 'odclock.views.ingresaroferta'),
     url(r'^eliminaroferta$', 'odclock.views.eliminaroferta'),
     url(r'^verficha$', 'odclock.views.verficha'),
+<<<<<<< HEAD
     url(r'^atencion$', 'odclock.views.atencion'),
+=======
+    url(r'oli$','odclock.views.oli',name='oli'),
+
+
+    url(r'ajax/test$','odclock.views.test',name='test'),
+
+    # url(dajaxice_config.dajaxice_url, include('dajaxice.urls')),
+>>>>>>> 46c3776c582dd6cc865c0f0299cd1c2f9920561c
     url(r'^admin/', include(admin.site.urls))
 )
+
+urlpatterns += staticfiles_urlpatterns()

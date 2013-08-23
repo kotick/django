@@ -43,7 +43,7 @@
 									<td>
 			                            <form action="borrar/hora/{{agendamiento.id}}/" method="post">
 				                            {% csrf_token %}
-				                            <button type="submit"class="btn btn-primary">Cancelar</button>                            
+				                            <button type="submit"class="btn btn-primary">Cancelar</button>
 			                            </form>
 									</td>
 								</tr>
@@ -222,68 +222,66 @@
 			</div>	
 		</div>
 		<div class="tab-pane fade" id="administrar">
-			<h3>Nombre de usuario: </h3>{{user.username}}
-			<h3>Correo: </h3>{{user.email}}
-			<h3>Telefono Celular: </h3>{{user.paciente.telefono_c}}
-			<h3>Telefono Fijo: </h3>{{user.paciente.telefono_f}}
+			<h3>{{user.paciente.nombres}} {{user.paciente.apellido_p}} {{user.paciente.apellido_m}}</h3>
+			<h2>Nombre de usuario: </h2>{{user.username}}
 			<div class="accordion" id="accordion2">
                 <div class="accordion-group">
                     <div class="accordion-heading">
-	                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion2" href="#collapseOne">Modificar Contraseña</a>
+	                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion2" href="#collapseOne">
+	                    	<h4>*******</h4>
+	                    	<div class="ediciond">Modificar Contraseña</div>
+	                    </a>
                     </div>
                     <div id="collapseOne" class="accordion-body collapse" style="height: 0px;">
 	                    <div class="accordion-inner">
         				    <form action="modificar/password" method="post">
 						        {% csrf_token %}
 						        {{modificarp_form.as_p}}
-					        	<input type="submit" class="btn" value="Registrarse">
+					        	<input type="submit" class="btn" value="Modificar">
 					    	</form>	 	                    	
 	                    	
 	                    </div>
                     </div>
                 </div>
                 <div class="accordion-group">
-                  <div class="accordion-heading">
-                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion2" href="#collapseTwo">Modificar Correo electronico</a>
+                  	<div class="accordion-heading">
+                    	<a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion2" href="#collapseTwo"><div style="color=white;">{{user.email}}</div>              Modificar Correo electronico</a>
                     </div>
                     <div id="collapseTwo" class="accordion-body collapse" style="height: 0px;">
 	                    <div class="accordion-inner">
         				    <form action="modificar/correo" method="post">
 						        {% csrf_token %}
 						        {{modificare_form.as_p}}
-					        	<input type="submit" class="btn" value="Registrarse">
-					    	</form>	                    	
-	                    	
+					        	<input type="submit" class="btn" value="Modificar">
+					    	</form>      	
 	                    </div>
                     </div>
                 </div>
                 <div class="accordion-group">
                     <div class="accordion-heading">
-                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion2" href="#collapseThree">Modificar Telefono Celular</a>
+                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion2" href="#collapseThree"><div style="color=white;">{{user.paciente.telefono_c}}</div>Modificar Telefono Celular</a>
                     </div>
                     <div id="collapseThree" class="accordion-body collapse" style="height: 0px;">
                     	<div class="accordion-inner">
         				    <form action="modificar/telefonocelular" method="post">
 						        {% csrf_token %}
 						        {{modificartc_form.as_p}}
-					        	<input type="submit" class="btn" value="Registrarse">
+					        	<input type="submit" class="btn" value="Modificar">
 					    	</form>
-                    		
                     	</div>
                     </div>
                 </div>
                 <div class="accordion-group">
                     <div class="accordion-heading">
-                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion2" href="#collapseFour">Modificar Telefono Fijo</a>
+                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion2" href="#collapseFour"><div style="color=white;">{{user.paciente.telefono_f}}</div>Modificar Telefono Fijo</a>
                     </div>
                     <div id="collapseFour" class="accordion-body collapse" style="height: 0px;">
                     	<div class="accordion-inner">
         				    <form action="modificar/telefonofijo" method="post">
 						        {% csrf_token %}
 						        {{modificartf_form.as_p}}
-					        	<input type="submit" class="btn" value="Registrarse">
-					    	</form>                    		                    		
-                    		
+					        	<input type="submit" class="btn" value="Modificar">
+					    	</form>
                     	</div>
                     </div>
                 </div>	                

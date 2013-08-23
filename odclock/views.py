@@ -1,9 +1,5 @@
 # -*- encoding: utf-8 -*-
- 
-##
-# App: app
-##
- 
+
 # Core
 from django.shortcuts import render_to_response, HttpResponseRedirect
 from django.http import HttpResponse
@@ -93,7 +89,7 @@ def paciente(request):
     else:
         return HttpResponseRedirect('/sesionpaciente')
 
-def iniciosesionpaciente(request):    
+def iniciosesionpaciente(request):
     title = 'Clinica Odontologica'    
     login_form = LoginForm()
     regis_form = RegisForm()
@@ -118,7 +114,7 @@ def iniciosesionpersonal(request):
         context_instance=RequestContext(request)
     )
 
-def quienessomos(request):    
+def quienessomos(request):
     title = 'Clinica Odontologica'
     return render_to_response(
         'quienessomos.html',
@@ -129,17 +125,27 @@ def quienessomos(request):
     )
 
 @login_required
-def dentista(request):    
+def dentista(request):
     title = 'Clinica Odontologica'
     usuario = User.objects.get(username=request.user)
     agendamientos=Agendamiento.objects.filter(dentista=usuario.dentista)
     verficha_form=Verficha()
+    atencion_form=IngresarAtencion()
+    modificarp_form = ModificarP()
+    modificare_form = ModificarE()
+    modificartc_form = ModificarTc()
+    modificartf_form = ModificarTf()
     return render_to_response(
         'dentista.html',
         {
             'title': title,
+            'atencion_form':atencion_form,
             'agendamientos':agendamientos,
             'verficha_form':verficha_form,
+            'modificarp_form':modificarp_form,
+            'modificare_form':modificare_form,
+            'modificartc_form':modificartc_form,
+            'modificartf_form':modificartf_form,
         },
         context_instance=RequestContext(request)
     )
@@ -154,6 +160,7 @@ def secretaria(request):
         },
         context_instance=RequestContext(request)
     )
+    
    
 @login_required 
 def administrador(request):
@@ -584,6 +591,10 @@ def desasignarespecialidad(request):
     union.delete()
     
     return HttpResponseRedirect('/administrador')
+
+@login_required
+def atencion(request):
+    return HttpResponseRedirect('/personal')
 
 @login_required
 def eliminaroferta(request):

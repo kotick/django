@@ -222,13 +222,13 @@ textarea {
 }
 
 body {
+  background-color:#8A795D;
+  /*background:url(fondo.jpg) no-repeat center top;*/
   padding-top: 90px;
   margin: 0;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: 14px;
   line-height: 20px;
-  color: #333333;
-  background-image: url(fondo.jpg);
 }
 
 a {
@@ -741,10 +741,8 @@ h4,
 h5,
 h6 {
   margin: 10px 0;
-  font-family: inherit;
   font-weight: bold;
   line-height: 20px;
-  color: inherit;
   text-rendering: optimizelegibility;
 }
 
@@ -4368,10 +4366,9 @@ input[type="submit"].btn.btn-mini {
   min-height: 40px;
   padding-right: 20px;
   padding-left: 20px;
-  background-color: #fafafa;
-  background:opacity(0.5);
+  background-color: hsla(183, 96%, 97%, 0.5);
   background-repeat: repeat-x;
-  border: 1px solid #d4d4d4;
+  border: 1px transparent;
   -webkit-border-radius: 4px;
      -moz-border-radius: 4px;
           border-radius: 4px;
@@ -4407,12 +4404,12 @@ background-color:red;
   float: left;
   padding: 10px 20px 10px;
   margin-left: 20px;
-  margin-right: 300px;
-  font-size: 20px;
+  margin-right: 250px;
+  font-size: 25px;
   font-weight: 200;
-  color: #777777;
-  text-shadow: 0 1px 0 #ffffff;
-  font-family: "DroidSerif",Serif;
+  color: #ffffff;
+  text-shadow: 1px 1px 1px #8C8C8C;
+  font-family: "Bilbo Swash Caps",cursive;
 
 }
 
@@ -4613,13 +4610,15 @@ background-color:red;
 .navbar .nav > li > a {
   float: none;
   padding: 10px 15px 10px;
-  color: #777777;
+  color: #ffffff;
   text-decoration: none;
-  text-shadow: 0 1px 0 #ffffff;
+  text-shadow: 1px 1px 1px #8C8C8C;
+  font-size: 15px;
 }
 
 .navbar .nav .dropdown-toggle .caret {
   margin-top: 8px;
+
 }
 
 .navbar .nav > li > a:focus,
@@ -5976,7 +5975,6 @@ a.badge:focus {
 }
 
 .carousel-inner {
-
   position: relative;
   width: 100%;
   overflow: hidden;
@@ -5994,7 +5992,6 @@ a.badge:focus {
 
 .carousel-inner > .item > img,
 .carousel-inner > .item > a > img {
-
   display: block;
   line-height: 1;
 }
@@ -6097,27 +6094,41 @@ a.badge:focus {
 }
 
 .carousel-caption {
+  background-color: hsla(37, 19%, 45%, 0.6);
   position: absolute;
   right: 0;
   bottom: 0;
   left: 0;
   padding: 15px;
-  background: #333333;
-  background: rgba(0, 0, 0, 0.75);
+
 }
 
-.carousel-caption h4,
+.carousel-caption h1,
 .carousel-caption p {
   line-height: 20px;
   color: #ffffff;
+  
 }
 
-.carousel-caption h4 {
-  margin: 0 0 5px;
+.carousel-caption h1 {
+  
+   font-family: "Bilbo Swash Caps", cursive;
+   font-size: 45px;
+   color: #ffffff;
+   opacity: 0,8 alpha;
+   text-align: left;
+   font-weight: normal;
+   text-shadow: 1px 1px 1px #8C8C8C;
+   margin-top: 20px;
+    margin-bottom: 20px;
+ 
 }
 
 .carousel-caption p {
   margin-bottom: 0;
+  font-size: 20px;
+  text-align: right;
+
 }
 
 .hero-unit {

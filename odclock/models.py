@@ -86,6 +86,8 @@ class Plan_tratamiento(models.Model):
     bloques = models.IntegerField(max_length=100)
     detalles = models.TextField()
     desabilitado = models.BooleanField()
+    def __unicode__(self):
+        return self.nombre
 
 class Atencion(models.Model):
     tipo = models.IntegerField(max_length=100)
@@ -95,7 +97,6 @@ class Atencion(models.Model):
     paciente= models.ForeignKey(Paciente)
     fecha = models.DateTimeField()
     detalles = models.TextField()
-    desabilitado = models.BooleanField()
 
 class Derivacion(models.Model):
     paciente = models.ForeignKey(Paciente)

@@ -98,3 +98,10 @@ class VerhorariosE(forms.Form):
 class VerhorariosD(forms.Form):
 	username =forms.ModelChoiceField(queryset=Dentista.objects.all(),widget=forms.Select(),label= 'RUN')
 	especialidad =forms.ModelChoiceField(queryset=Especialidad.objects.all(),widget=forms.Select(),label= 'Nombre de  la especialidad')
+
+class IngresarAtencion(forms.Form):
+	tipo = forms.CharField(widget=forms.TextInput(attrs={'placeholder':'Tipo de atención'}),label= 'Tipo')
+	paciente= forms.ModelChoiceField(queryset=Paciente.objects.all(),widget=forms.Select(),label= 'Paciente atendido')
+	plan_tratamiento = forms.ModelChoiceField(queryset=Plan_tratamiento.objects.all(),widget=forms.Select(),label= 'Plan de Tratamiento')
+	box = forms.ModelChoiceField(queryset=Box.objects.all(),widget=forms.Select(),label= 'Box utilizado')
+	detalles = forms.CharField(widget=forms.TextInput(attrs={'placeholder':'Detalles'}),label= 'Detalles de la atención')

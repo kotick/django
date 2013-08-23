@@ -39,16 +39,12 @@ urlpatterns = patterns('',
     url(r'^ingresaroferta$', 'odclock.views.ingresaroferta'),
     url(r'^eliminaroferta$', 'odclock.views.eliminaroferta'),
     url(r'^verficha$', 'odclock.views.verficha'),
-<<<<<<< HEAD
     url(r'^atencion$', 'odclock.views.atencion'),
-=======
     url(r'oli$','odclock.views.oli',name='oli'),
-
-
-    url(r'ajax/test$','odclock.views.test',name='test'),
+    url(r'ajaxespecialidad$','odclock.views.ajaxespecialidad',name='ajaxespecialidad'),
+    url(r'ajaxdentista$','odclock.views.ajaxdentista',name='ajaxdentista'),
 
     # url(dajaxice_config.dajaxice_url, include('dajaxice.urls')),
->>>>>>> 46c3776c582dd6cc865c0f0299cd1c2f9920561c
     url(r'^admin/', include(admin.site.urls))
 )
 

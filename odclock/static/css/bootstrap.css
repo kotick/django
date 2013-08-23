@@ -222,12 +222,11 @@ textarea {
 }
 
 body {
-  background-color:#8A795D;
-  /*background:url(fondo.jpg) no-repeat center top;*/
+  background-color: #fafafa;
   padding-top: 90px;
   margin: 0;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-  font-size: 14px;
+  font-size: 16px;
   line-height: 20px;
 }
 
@@ -4366,7 +4365,7 @@ input[type="submit"].btn.btn-mini {
   min-height: 40px;
   padding-right: 20px;
   padding-left: 20px;
-  background-color: hsla(183, 96%, 97%, 0.5);
+  background-color: hsla(215, 62%, 88%, 1.0);
   background-repeat: repeat-x;
   border: 1px transparent;
   -webkit-border-radius: 4px;
@@ -4407,8 +4406,8 @@ background-color:red;
   margin-right: 250px;
   font-size: 25px;
   font-weight: 200;
-  color: #ffffff;
-  text-shadow: 1px 1px 1px #8C8C8C;
+  color: #22354d;
+  text-shadow: 1px 1px 1px #8d96a1;
   font-family: "Bilbo Swash Caps",cursive;
 
 }
@@ -4610,9 +4609,9 @@ background-color:red;
 .navbar .nav > li > a {
   float: none;
   padding: 10px 15px 10px;
-  color: #ffffff;
+  color: #22354d;
   text-decoration: none;
-  text-shadow: 1px 1px 1px #8C8C8C;
+  text-shadow: 1px 1px 1px #8d96a1;
   font-size: 15px;
 }
 

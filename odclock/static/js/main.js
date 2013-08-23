@@ -1,26 +1,20 @@
 
 $(document).on('ready', function() {
-	$('#olitest').on('change', function() { 
+	$('#id_especialidad').on('change', function() { 
+		var val = $('#id_especialidad option:selected').html();
 
 		$.ajax({
-
-			//var coso = $("#olitest:selected").text();
-			//var valor= $("#olitest").val();
 			async:true,
-			url:'ajax/test',
-			data:'a=1&b=2&valor&csrfmiddlewaretoken=' + getCookie('csrftoken'),
+			url:'ajaxespecialidad',
+			data:'a='+val+'&valor&csrfmiddlewaretoken=' + getCookie('csrftoken'),
 			type:'post',
 			dataType: 'html',
 			beforeSend: function () {
-				//alert('enviando peticion ajax...');
+				$('#id_dentista').empty()
+				
 			},
 			success: function(respuesta) {
-			
-				//Lafuncion(respuesta);
-				$('#respuesta').html(respuesta)
-
-
-				
+				hora(respuesta);
 			},
 			timeout: 8000,
 			error: function () {
@@ -30,20 +24,13 @@ $(document).on('ready', function() {
 	});
 });
 
-
-function Lafuncion(jdata)
-{
-
-//	$('#respuesta').append('<h2> me lleva el chanfe!</h2>');
-
-		$('#combo2').append('<option value ="0">Select...</option>');
-	    for (var i = 0; i < jdata.length; i++)
-    {
-    	$('#combo2').append('<option value ="'+i+'">'+jdata[i]+'</option>');
-
-        //options += '<option value="' + jdata[i].Description + '">' + jdata[i].Description + ' (' + jdata[i].ProcedureCode + ')' + '</option>';
-    
-    };
-
-    
+function hora(jdata){
+	$('#id_dentista').append('<option value ="0">elija...</option>');
+	var coso = JSON.parse( jdata );
+    for (var i = 0; i < coso.length; i++){
+		$('#id_dentista').append('<option value ="'+i+'">'+coso[i]+'</option>');
+	};
 }
+
+///**********************************************
+

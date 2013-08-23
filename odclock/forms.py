@@ -3,7 +3,7 @@ from django import forms
 from odclock.models import *
 
 class LoginForm(forms.Form):
-    username = forms.CharField(widget=forms.TextInput(attrs={'placeholder':'Rut'}),label= 'RUN')
+    username = forms.CharField(widget=forms.TextInput(attrs={'placeholder':'Rut'}),label= 'RUN',)
     password = forms.CharField(widget=forms.PasswordInput(attrs={'placeholder':'Password'}),label= 'Contraseña')
 
 class RegisForm(forms.Form):
@@ -92,16 +92,16 @@ class Verficha(forms.Form):
 	username =forms.CharField(widget=forms.TextInput(attrs={'placeholder':'RUN'}),label= 'RUN')
 
 class VerhorariosE(forms.Form):
-	especialidad =forms.ModelChoiceField(queryset=Especialidad.objects.all(),widget=forms.Select(),label= 'Nombre de  la especialidad')
-	username =forms.ModelChoiceField(queryset=Dentista.objects.filter(),widget=forms.Select(),label= 'RUN')
+	especialidad =forms.ModelChoiceField(queryset=Especialidad.objects.all(),widget=forms.Select(),label= 'Seleccione una especialidad')
+
+tipo_choice=(('Agendada','Agendada'),('Urgencia','Urgencia'))
 
 class VerhorariosD(forms.Form):
-	username =forms.ModelChoiceField(queryset=Dentista.objects.all(),widget=forms.Select(),label= 'RUN')
-	especialidad =forms.ModelChoiceField(queryset=Especialidad.objects.all(),widget=forms.Select(),label= 'Nombre de  la especialidad')
+	dentista =forms.ChoiceField(widget=forms.Select(),label= 'Ahora seleccione un dentista')
 
 class IngresarAtencion(forms.Form):
-	tipo = forms.CharField(widget=forms.TextInput(attrs={'placeholder':'Tipo de atención'}),label= 'Tipo')
-	paciente= forms.ModelChoiceField(queryset=Paciente.objects.all(),widget=forms.Select(),label= 'Paciente atendido')
+	Tipo = forms.ChoiceField(choices=tipo_choice)
+	paciente= forms.CharField(widget=forms.TextInput(attrs={'placeholder':'Rut del paciente'}),label= 'Paciente atendido')
 	plan_tratamiento = forms.ModelChoiceField(queryset=Plan_tratamiento.objects.all(),widget=forms.Select(),label= 'Plan de Tratamiento')
 	box = forms.ModelChoiceField(queryset=Box.objects.all(),widget=forms.Select(),label= 'Box utilizado')
 	detalles = forms.CharField(widget=forms.TextInput(attrs={'placeholder':'Detalles'}),label= 'Detalles de la atención')

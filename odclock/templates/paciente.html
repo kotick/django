@@ -56,9 +56,10 @@
 			{%endif%}
 		</div>
 		<div class="tab-pane fade" id="tomar">
-		    <form action="modificar/password" method="post">
+		    <form action="" method="post">
 		        {% csrf_token %}
-	        	<input type="submit" class="btn" value="Registrarse">
+		        {{verhorarioe_form}}
+		        {{verhorariod_form}}
 	    	</form>	 
 			<div class="tabbable tabs-top">      
 				<ul id="myTab" class="nav nav-tabs">
@@ -83,7 +84,12 @@
 							<tbody>
 								<tr>
 									<td>08:00</td>
-									<td></td>
+									<td>
+										<form action="modificar/password" method="post">
+								        {% csrf_token %}
+							        	<input type="submit" class="btn" value="Tomar">
+							    		</form>	
+							    	</td>
 									<td></td>
 									<td></td>
 									<td></td>
@@ -222,14 +228,12 @@
 			</div>	
 		</div>
 		<div class="tab-pane fade" id="administrar">
-			<h3>{{user.paciente.nombres}} {{user.paciente.apellido_p}} {{user.paciente.apellido_m}}</h3>
-			<h2>Nombre de usuario: </h2>{{user.username}}
+			<h3>Hola! {{user.paciente.nombres}} {{user.paciente.apellido_p}} {{user.paciente.apellido_m}}</h3>
 			<div class="accordion" id="accordion2">
                 <div class="accordion-group">
                     <div class="accordion-heading">
 	                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion2" href="#collapseOne">
-	                    	<h4>*******</h4>
-	                    	<div class="ediciond">Modificar Contraseña</div>
+	                    	<div class="edicioni">Contraseña</div><div class="edicionc">*******</div><div class="ediciond">Modificar</div>
 	                    </a>
                     </div>
                     <div id="collapseOne" class="accordion-body collapse" style="height: 0px;">
@@ -245,7 +249,9 @@
                 </div>
                 <div class="accordion-group">
                   	<div class="accordion-heading">
-                    	<a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion2" href="#collapseTwo"><div style="color=white;">{{user.email}}</div>              Modificar Correo electronico</a>
+                    	<a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion2" href="#collapseTwo">
+	                    	<div class="edicioni">Correo</div><div class="edicionc">{{user.email}}</div><div class="ediciond">Modificar</div>
+                    	</a>
                     </div>
                     <div id="collapseTwo" class="accordion-body collapse" style="height: 0px;">
 	                    <div class="accordion-inner">
@@ -259,7 +265,9 @@
                 </div>
                 <div class="accordion-group">
                     <div class="accordion-heading">
-                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion2" href="#collapseThree"><div style="color=white;">{{user.paciente.telefono_c}}</div>Modificar Telefono Celular</a>
+                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion2" href="#collapseThree">
+                    	<div class="edicioni">Telefono Celular</div><div class="edicionc">{{user.paciente.telefono_c}}</div><div class="ediciond">Modificar</div>
+                    </a>
                     </div>
                     <div id="collapseThree" class="accordion-body collapse" style="height: 0px;">
                     	<div class="accordion-inner">
@@ -273,7 +281,9 @@
                 </div>
                 <div class="accordion-group">
                     <div class="accordion-heading">
-                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion2" href="#collapseFour"><div style="color=white;">{{user.paciente.telefono_f}}</div>Modificar Telefono Fijo</a>
+                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion2" href="#collapseFour">
+                    	<div class="edicioni">Telefono Fijo</div><div class="edicionc">{{user.paciente.telefono_f}}</div><div class="ediciond">Modificar</div>
+                    </a>
                     </div>
                     <div id="collapseFour" class="accordion-body collapse" style="height: 0px;">
                     	<div class="accordion-inner">

@@ -17,7 +17,7 @@ class Paciente(models.Model):
     desabilitado = models.BooleanField()
 
     def __unicode__(self):
-        return self.user.username
+        return self.nombres
 
 
 class Dentista(models.Model):
@@ -34,7 +34,7 @@ class Dentista(models.Model):
     desabilitado = models.BooleanField()
     entregohorario=models.BooleanField()
     def __unicode__(self):
-        return self.user.username
+        return self.nombres
 
 
 class Secretaria(models.Model):
@@ -48,7 +48,7 @@ class Secretaria(models.Model):
     contrasena = models.CharField(max_length=100)
     desabilitado = models.BooleanField()
     def __unicode__(self):
-        return self.user.username
+        return self.nombres
 
 
 class Box(models.Model):

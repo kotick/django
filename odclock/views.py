@@ -89,6 +89,8 @@ def paciente(request):
         modificare_form = ModificarE()
         modificartc_form = ModificarTc()
         modificartf_form = ModificarTf()
+        verhorarioe_form=VerhorariosE()
+        verhorariod_form=VerhorariosD()
         error = False
         return render_to_response(        
             'paciente.html',
@@ -99,6 +101,8 @@ def paciente(request):
                 'modificare_form':modificare_form,
                 'modificartc_form':modificartc_form,
                 'modificartf_form':modificartf_form,
+                'verhorarioe_form':verhorarioe_form,
+                'verhorariod_form':verhorariod_form,
                 'error':error,
             },
             context_instance=RequestContext(request)
@@ -621,7 +625,7 @@ def eliminaroferta(request):
 def verficha(request):
     return HttpResponseRedirect('/personal')
 
-<<<<<<< HEAD
+
 @login_required
 def ingresaroferta(request):
     clicks=request.POST.keys()
@@ -1717,21 +1721,24 @@ def ingresaroferta(request):
                 b.save()
 
     return HttpResponseRedirect('/dentista')
-=======
 
+def ajaxespecialidad(request):
+    a = request.POST['a']
+    c = Especialidad.objects.get(nombre=a)
+    b= Dentista_especialidad.objects.filter(especialidad=c)
+    lista = []
+    for u in b:
+        lista.append(u.dentista.nombres)
+    data = simplejson.dumps(lista)
+    return HttpResponse(data, mimetype='application/json')
 
-def test(request):
-    #acá se recibe la wea con el metodo post, y podemos hacer un metodo
-    #que devuelva la lista de especialidades dependiendo del dentista uju!!!!
-    #a="nepe"
-    #b='<option>'+a+'</option>'
-    a =[]
-    a.append("p")
-    a.append("i")
-    a.append("c")
-    a.append("o")
-
-    return HttpResponse(request.POST['coso'])
-    #return HttpResponse(a)
-    #return HttpResponse('<h1>TEST '+ request.POST['a'] +','+request.POST['b'] +'</h1>')
->>>>>>> 46c3776c582dd6cc865c0f0299cd1c2f9920561c
+def ajaxdentista(request):
+    a = request.POST['p']
+    c = Especialidad.objects.get(nombre=a)
+    b= Dentista_especialidad.objects.filter(especialidad=c)
+    lista = []
+    for u in b:
+        lista.append(u.dentista)
+        lista.append(",")
+    lista.append("pico")
+    return HttpResponse(lista)
